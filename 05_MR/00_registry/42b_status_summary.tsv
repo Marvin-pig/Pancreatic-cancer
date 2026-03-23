@@ -1,0 +1,7 @@
+item	value
+"api_user_ok"	"TRUE"
+"clump_pop_primary"	"EUR"
+"n_genes_total"	"8"
+"n_genes_with_primary_instruments"	"8"
+"n_genes_with_primary_iv_ge_3"	"4"
+"recommended_next_action"	"Proceed to 43: extract BBJ outcome data and harmonise exposure-outcome pairs"

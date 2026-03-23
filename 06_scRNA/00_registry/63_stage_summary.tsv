@@ -1,0 +1,9 @@
+item	value
+"stage63_completed"	"TRUE"
+"cluster_score_summary_written"	"TRUE"
+"sample_score_summary_written"	"TRUE"
+"gene_plot_registry_written"	"TRUE"
+"signature_featureplot_written"	"TRUE"
+"mcd_featureplot_written"	"TRUE"
+"writing_digest_written"	"TRUE"
+"next_stage"	"64_write_single_cell_result_paragraph_and_prepare_figure_layout"

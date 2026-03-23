@@ -1,0 +1,11 @@
+item	value
+"stage57_completed"	"TRUE"
+"hvg_written"	"TRUE"
+"pca_embeddings_written"	"TRUE"
+"cluster_composition_written"	"TRUE"
+"cluster_dominance_written"	"TRUE"
+"markers_written"	"TRUE"
+"umap_cluster_written"	"TRUE"
+"umap_sample_written"	"TRUE"
+"clustered_object_written"	"TRUE"
+"next_stage"	"58_integration_or_preliminary_annotation_decision"

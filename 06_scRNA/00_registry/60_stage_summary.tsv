@@ -1,0 +1,8 @@
+item	value
+"stage60_completed"	"TRUE"
+"major_compartment_summary_written"	"TRUE"
+"epithelial_object_written"	"TRUE"
+"immune_object_written"	"TRUE"
+"fibroblast_object_written"	"TRUE"
+"unresolved_object_written"	"TRUE"
+"next_stage"	"61_refine_epithelial_malignant_compartment"

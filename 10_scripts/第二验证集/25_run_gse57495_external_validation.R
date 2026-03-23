@@ -1,0 +1,373 @@
+# =========================
+# 25_run_gse57495_external_validation.R
+# 目的：
+# 1. 检查 12 个 signature genes 在 GSE57495 中的覆盖率
+# 2. 使用冻结系数计算 GSE57495 risk score
+# 3. 使用训练集 median cutoff 分组
+# 4. 做 GSE57495 外部 KM / Cox
+# 5. 增加 external median cutoff 敏感性分析
+# 6. 计算 12/24/36 月 timeROC
+# =========================
+
+suppressPackageStartupMessages({
+  library(data.table)
+  library(dplyr)
+  library(survival)
+  library(survminer)
+  library(broom)
+  library(timeROC)
+  library(ggplot2)
+})
+
+# ---------- 路径 ----------
+setwd("/Users/wmz_mac/Desktop/胰腺癌")
+expr_file       <- "04_bulk_analysis/04_external_validation/02_processed_data/GSE57495/24_GSE57495_expression_gene_level.tsv"
+cli_file        <- "04_bulk_analysis/04_external_validation/02_processed_data/GSE57495/24_GSE57495_clinical_survival_ready.tsv"
+coef_file       <- "04_bulk_analysis/03_survival_model/15_final_signature_coefficients.tsv"
+train_risk_file <- "04_bulk_analysis/03_survival_model/13_risk_score_training.tsv"
+
+out_dir <- "04_bulk_analysis/04_external_validation/04_signature_validation/GSE57495"
+dir.create(out_dir, recursive = TRUE, showWarnings = FALSE)
+
+# ---------- 读取 ----------
+expr_df    <- fread(expr_file)
+cli_df     <- fread(cli_file)
+coef_df    <- fread(coef_file)
+train_risk <- fread(train_risk_file)
+
+stopifnot("gene" %in% colnames(expr_df))
+stopifnot(all(c("sample_id", "OS_time", "OS_event") %in% colnames(cli_df)))
+stopifnot(all(c("gene", "coefficient") %in% colnames(coef_df)))
+stopifnot("risk_score" %in% colnames(train_risk))
+
+# ---------- [FIX-1] 过滤生存数据中的 NA 和无效值 ----------
+cli_df <- cli_df %>%
+  filter(
+    !is.na(OS_time),
+    !is.na(OS_event),
+    OS_time > 0                        # 排除 0 或负值的生存时间
+  )
+cat("Clinical samples after removing NA/invalid survival:", nrow(cli_df), "\n")
+
+# ---------- [FIX-2] OS_time 单位校验与自动转换 ----------
+# 如果中位 OS_time > 100，很可能单位是天而不是月，需要转换
+median_os <- median(cli_df$OS_time, na.rm = TRUE)
+cat("Median OS_time (raw):", median_os, "\n")
+
+if (median_os > 100) {
+  cat("⚠ OS_time appears to be in DAYS (median =", median_os,
+      "). Converting to months (÷30.44).\n")
+  cli_df$OS_time <- cli_df$OS_time / 30.44
+} else {
+  cat("OS_time appears to be in MONTHS (median =", median_os, ").\n")
+}
+
+# ---------- 表达矩阵 ----------
+expr_mat <- as.data.frame(expr_df, check.names = FALSE, stringsAsFactors = FALSE)
+rownames(expr_mat) <- expr_mat$gene
+expr_mat$gene <- NULL
+expr_mat <- as.matrix(expr_mat)
+mode(expr_mat) <- "numeric"
+
+# ---------- signature gene coverage ----------
+sig_genes    <- coef_df$gene
+genes_found  <- intersect(sig_genes, rownames(expr_mat))
+genes_missing <- setdiff(sig_genes, rownames(expr_mat))
+
+coverage_df <- data.frame(
+  gene             = sig_genes,
+  found_in_GSE57495 = sig_genes %in% genes_found,
+  stringsAsFactors = FALSE
+)
+
+fwrite(
+  coverage_df,
+  file.path(out_dir, "25_GSE57495_signature_gene_coverage.tsv"),
+  sep = "\t"
+)
+
+cat("Signature genes total:", length(sig_genes), "\n")
+cat("Genes found:", length(genes_found), "\n")
+cat("Genes missing:", length(genes_missing), "\n")
+if (length(genes_missing) > 0) {
+  cat("Missing genes:", paste(genes_missing, collapse = ", "), "\n")
+}
+
+if (length(genes_found) < 8) {
+  stop("Too few signature genes found in GSE57495.")
+}
+
+# ---------- [FIX-3] 缺失基因对 risk score 的影响警告 ----------
+if (length(genes_missing) > 0) {
+  cat("⚠ WARNING:", length(genes_missing), "of", length(sig_genes),
+      "signature genes are missing.\n",
+      "  Risk score will be computed using", length(genes_found),
+      "genes with their ORIGINAL coefficients.\n",
+      "  This may shift the score distribution relative to training set.\n")
+}
+
+# ---------- 样本对齐 ----------
+common_samples <- intersect(colnames(expr_mat), cli_df$sample_id)
+cat("Matched expression-clinical samples:", length(common_samples), "\n")
+
+if (length(common_samples) < 30) {
+  stop("Too few matched samples between GSE57495 expression and clinical tables.")
+}
+
+expr_mat <- expr_mat[, common_samples, drop = FALSE]
+cli_df   <- cli_df %>%
+  filter(sample_id %in% common_samples) %>%
+  arrange(match(sample_id, common_samples))
+
+stopifnot(all(colnames(expr_mat) == cli_df$sample_id))
+
+# ---------- 提取 signature 表达 ----------
+expr_sub <- expr_mat[genes_found, , drop = FALSE]
+
+# ---------- 标准化 ----------
+zscore_vec <- function(x) {
+  s <- sd(x, na.rm = TRUE)
+  if (is.na(s) || s == 0) return(rep(0, length(x)))
+  (x - mean(x, na.rm = TRUE)) / s
+}
+
+expr_sub_z <- t(apply(expr_sub, 1, zscore_vec))   # gene x sample
+expr_sub_z <- t(expr_sub_z)                       # sample x gene
+
+# ---------- 风险评分 ----------
+coef_use <- coef_df %>%
+  filter(gene %in% genes_found)
+
+coef_vec <- coef_use$coefficient
+names(coef_vec) <- coef_use$gene
+
+# 确保矩阵列顺序与系数向量一致
+risk_score <- as.numeric(
+  expr_sub_z[, coef_use$gene, drop = FALSE] %*% coef_vec
+)
+
+# ---------- 固定训练集 cutoff ----------
+train_cutoff <- median(train_risk$risk_score, na.rm = TRUE)
+
+risk_ext <- cli_df %>%
+  mutate(
+    risk_score = risk_score,
+    risk_group_training_cutoff = ifelse(risk_score >= train_cutoff, "High", "Low")
+  )
+
+risk_ext$risk_group_training_cutoff <- factor(
+  risk_ext$risk_group_training_cutoff,
+  levels = c("Low", "High")
+)
+
+# ---------- 外部中位数 cutoff ----------
+ext_cutoff <- median(risk_ext$risk_score, na.rm = TRUE)
+
+risk_ext <- risk_ext %>%
+  mutate(
+    risk_group_external_median = ifelse(risk_score >= ext_cutoff, "High", "Low")
+  )
+
+risk_ext$risk_group_external_median <- factor(
+  risk_ext$risk_group_external_median,
+  levels = c("Low", "High")
+)
+
+fwrite(
+  risk_ext,
+  file.path(out_dir, "25_GSE57495_external_risk_score.tsv"),
+  sep = "\t"
+)
+
+# ---------- 审计 ----------
+audit_df <- data.frame(
+  metric = c(
+    "n_signature_genes_total",
+    "n_signature_genes_found",
+    "n_signature_genes_missing",
+    "genes_missing_names",
+    "n_matched_samples",
+    "n_events",
+    "training_cutoff",
+    "external_median_cutoff",
+    "n_high_training_cutoff",
+    "n_low_training_cutoff",
+    "n_high_external_median",
+    "n_low_external_median",
+    "os_time_unit_conversion_applied"
+  ),
+  value = c(
+    length(sig_genes),
+    length(genes_found),
+    length(genes_missing),
+    ifelse(length(genes_missing) > 0, paste(genes_missing, collapse = ";"), "none"),
+    nrow(risk_ext),
+    sum(risk_ext$OS_event, na.rm = TRUE),
+    round(train_cutoff, 6),
+    round(ext_cutoff, 6),
+    sum(risk_ext$risk_group_training_cutoff == "High"),
+    sum(risk_ext$risk_group_training_cutoff == "Low"),
+    sum(risk_ext$risk_group_external_median == "High"),
+    sum(risk_ext$risk_group_external_median == "Low"),
+    ifelse(median_os > 100, "days_to_months", "none")
+  ),
+  stringsAsFactors = FALSE
+)
+
+fwrite(
+  audit_df,
+  file.path(out_dir, "25_GSE57495_validation_audit.tsv"),
+  sep = "\t"
+)
+
+# ============================================================
+#  KM 生存曲线
+# ============================================================
+
+# ---------- KM：训练集 cutoff ----------
+fit_km_traincut <- survfit(
+  Surv(OS_time, OS_event) ~ risk_group_training_cutoff,
+  data = risk_ext
+)
+
+pdf(file.path(out_dir, "25_GSE57495_km_training_cutoff.pdf"),
+    width = 7.2, height = 6.2)
+p1 <- ggsurvplot(
+  fit_km_traincut,
+  data       = risk_ext,
+  pval       = TRUE,
+  risk.table = TRUE,
+  conf.int   = FALSE,
+  xlab       = "Overall survival time (months)",
+  ylab       = "Overall survival probability",
+  legend.title = "Risk group",
+  legend.labs  = c("Low", "High"),
+  risk.table.height = 0.25,
+  palette    = c("#2E86C1", "#E74C3C"),
+  ggtheme    = theme_bw(base_size = 12)
+)
+print(p1)
+dev.off()
+
+# ---------- KM：外部中位数 ----------
+fit_km_extcut <- survfit(
+  Surv(OS_time, OS_event) ~ risk_group_external_median,
+  data = risk_ext
+)
+
+pdf(file.path(out_dir, "25_GSE57495_km_external_median.pdf"),
+    width = 7.2, height = 6.2)
+p2 <- ggsurvplot(
+  fit_km_extcut,
+  data       = risk_ext,
+  pval       = TRUE,
+  risk.table = TRUE,
+  conf.int   = FALSE,
+  xlab       = "Overall survival time (months)",
+  ylab       = "Overall survival probability",
+  legend.title = "Risk group",
+  legend.labs  = c("Low", "High"),
+  risk.table.height = 0.25,
+  palette    = c("#2E86C1", "#E74C3C"),
+  ggtheme    = theme_bw(base_size = 12)
+)
+print(p2)
+dev.off()
+
+# ============================================================
+#  Cox 回归
+# ============================================================
+
+# ---------- Cox：连续 risk_score ----------
+cox_score     <- coxph(Surv(OS_time, OS_event) ~ risk_score, data = risk_ext)
+cox_score_res <- broom::tidy(cox_score, exponentiate = TRUE, conf.int = TRUE)
+
+fwrite(
+  cox_score_res,
+  file.path(out_dir, "25_GSE57495_univcox_risk_score.tsv"),
+  sep = "\t"
+)
+
+# ---------- Cox：训练集 cutoff 分组 ----------
+cox_group_train     <- coxph(Surv(OS_time, OS_event) ~ risk_group_training_cutoff, data = risk_ext)
+cox_group_train_res <- broom::tidy(cox_group_train, exponentiate = TRUE, conf.int = TRUE)
+
+fwrite(
+  cox_group_train_res,
+  file.path(out_dir, "25_GSE57495_univcox_risk_group_training_cutoff.tsv"),
+  sep = "\t"
+)
+
+# ---------- Cox：外部中位数分组 ----------
+cox_group_ext     <- coxph(Surv(OS_time, OS_event) ~ risk_group_external_median, data = risk_ext)
+cox_group_ext_res <- broom::tidy(cox_group_ext, exponentiate = TRUE, conf.int = TRUE)
+
+fwrite(
+  cox_group_ext_res,
+  file.path(out_dir, "25_GSE57495_univcox_risk_group_external_median.tsv"),
+  sep = "\t"
+)
+
+# ============================================================
+#  [FIX-4] timeROC — 修正 AUC 索引对齐
+# ============================================================
+roc_times <- c(12, 24, 36)
+
+roc_fit <- timeROC(
+  T         = risk_ext$OS_time,
+  delta     = risk_ext$OS_event,
+  marker    = risk_ext$risk_score,
+  cause     = 1,
+  weighting = "marginal",
+  times     = roc_times,
+  iid       = TRUE
+)
+
+# ---- FIX: roc_fit$AUC 是一个 named vector，包含 t=0 (AUC=0.5) ----
+# ---- 必须按名称提取指定时间点的 AUC，而非直接赋值 ----
+auc_values <- sapply(roc_times, function(tt) {
+  idx <- which.min(abs(roc_fit$times - tt))
+  as.numeric(roc_fit$AUC[idx])
+})
+
+roc_tab <- data.frame(
+  time_months = roc_times,
+  AUC         = auc_values
+)
+
+fwrite(
+  roc_tab,
+  file.path(out_dir, "25_GSE57495_timeROC_months.tsv"),
+  sep = "\t"
+)
+
+cat("\nTime-dependent ROC AUCs:\n")
+print(roc_tab)
+
+# ---------- timeROC 可视化 ----------
+pdf(file.path(out_dir, "25_GSE57495_timeROC_months.pdf"),
+    width = 6.5, height = 5.5)
+plot(roc_fit, time = 12, col = "#2E86C1", lwd = 2, title = FALSE)
+plot(roc_fit, time = 24, add = TRUE, col = "#27AE60", lwd = 2)
+plot(roc_fit, time = 36, add = TRUE, col = "#E74C3C", lwd = 2)
+legend(
+  "bottomright",
+  legend = paste0(
+    c("12-month", "24-month", "36-month"),
+    " AUC = ",
+    sprintf("%.3f", auc_values)          # FIX: 使用已对齐的 auc_values
+  ),
+  col = c("#2E86C1", "#27AE60", "#E74C3C"),
+  lwd = 2,
+  bty = "n"
+)
+title(main = "Time-dependent ROC in GSE57495")
+dev.off()
+
+# ---------- session info ----------
+writeLines(
+  capture.output(sessionInfo()),
+  file.path(out_dir, "25_sessionInfo.txt")
+)
+
+cat("\n25_run_gse57495_external_validation.R finished successfully.\n")

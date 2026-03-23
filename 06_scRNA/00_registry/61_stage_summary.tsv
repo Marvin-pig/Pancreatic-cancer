@@ -1,0 +1,13 @@
+item	value
+"stage61_completed"	"TRUE"
+"candidate_pool_written"	"TRUE"
+"priority_presence_check_written"	"TRUE"
+"priority_cluster_sample_summary_written"	"TRUE"
+"candidate_cluster_summary_written"	"TRUE"
+"marker_panel_written"	"TRUE"
+"priority_marker_table_written"	"TRUE"
+"priority_marker_digest_written"	"TRUE"
+"priority_marker_error_log_written"	"TRUE"
+"decision_template_written"	"TRUE"
+"candidate_dotplot_written"	"TRUE"
+"next_stage"	"62_finalize_malignant_candidate_definition"

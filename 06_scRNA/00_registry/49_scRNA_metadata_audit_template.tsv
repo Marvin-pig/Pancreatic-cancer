@@ -1,0 +1,4 @@
+accession	metadata_file	sample_id_column	patient_id_column	tissue_column	treatment_column	diagnosis_column	response_column	tumor_normal_column	primary_metastatic_column	cell_barcode_column	celltype_annotation_column	metadata_complete_for_seurat	note
+"GSE155698"	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	"NO"	NA
+"CRA001160"	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	"NO"	NA
+"GSE205013"	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	"NO"	NA

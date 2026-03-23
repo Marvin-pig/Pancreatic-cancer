@@ -1,0 +1,8 @@
+67 completed
+Created at: 2026-03-23 12:08:27.741263
+
+[Goal]
+Run predicted drug sensitivity analysis using oncoPredict and frozen TCGA-PAAD risk groups.
+
+[Next step]
+Interpret candidate drugs and connect them with bulk / single-cell biology.

@@ -1,0 +1,11 @@
+target_field	detected_column
+gene_symbol	GeneSymbol
+gene_id	Gene
+SNP	SNP
+chr	SNPChr
+pos	SNPPos
+effect_allele	AssessedAllele
+other_allele	OtherAllele
+pval	Pvalue
+zscore	Zscore
+samplesize	NrSamples

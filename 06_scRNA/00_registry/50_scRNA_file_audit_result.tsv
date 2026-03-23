@@ -1,0 +1,4 @@
+accession	local_dataset_dir	n_files	has_any_file	has_likely_counts	has_likely_barcodes	has_likely_features	has_likely_metadata	has_likely_annotation	prelim_ready_for_manual_review
+"CRA001160"	"06_scRNA/01_raw_data/CRA001160"	0	"NO"	"NO"	"NO"	"NO"	"NO"	"NO"	"NO"
+"GSE155698"	"06_scRNA/01_raw_data/GSE155698"	0	"NO"	"NO"	"NO"	"NO"	"NO"	"NO"	"NO"
+"GSE205013"	"06_scRNA/01_raw_data/GSE205013"	0	"NO"	"NO"	"NO"	"NO"	"NO"	"NO"	"NO"

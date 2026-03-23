@@ -1,0 +1,4 @@
+accession	archive_path	archive_exists	extract_dir	extracted_ok	extract_message
+"GSE155698"	"06_scRNA/01_raw_data/GSE155698/GSE155698_RAW.tar"	TRUE	"06_scRNA/01_raw_data/GSE155698/extracted"	TRUE	"untar_success"
+"GSE205013"	"06_scRNA/01_raw_data/GSE205013/GSE205013_RAW.tar"	TRUE	"06_scRNA/01_raw_data/GSE205013/extracted"	TRUE	"untar_success"
+"CRA001160"	NA	FALSE	"06_scRNA/01_raw_data/CRA001160/extracted"	FALSE	"archive_not_found_or_not_applicable"

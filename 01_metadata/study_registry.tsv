@@ -1,0 +1,9 @@
+project_name	PAAD_metabolic_cell_death
+disease	Pancreatic adenocarcinoma
+main_theme	ferroptosis_cuproptosis_disulfidptosis
+primary_training_cohort	TCGA-PAAD
+primary_endpoint	OS
+normal_reference_policy	GTEx normal only used for expression comparison; not for prognostic modeling
+external_validation_policy	GEO/ICGC only for independent validation; no feature selection on these cohorts
+anti_leakage_rule	All predictive feature selection must be performed within training set only
+mr_policy	MR only starts after bulk candidate genes are finalized

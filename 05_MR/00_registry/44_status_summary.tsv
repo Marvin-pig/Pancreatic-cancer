@@ -1,0 +1,7 @@
+item	value
+"n_genes_input"	"8"
+"n_genes_with_mr_results"	"8"
+"n_genes_multi_snp_priority"	"2"
+"n_genes_with_heterogeneity_output"	"2"
+"n_genes_with_pleiotropy_output"	"2"
+"recommended_next_action"	"Proceed to 45: interpret MR results, identify lead causal candidates, and prepare result text/figures"

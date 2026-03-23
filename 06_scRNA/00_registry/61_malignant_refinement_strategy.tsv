@@ -1,0 +1,10 @@
+item	value
+"primary_focus"	"epithelial_malignant_refinement"
+"candidate_pool_definition"	"epithelial + acinar_like + unresolved priority clusters"
+"priority_unresolved_clusters_requested"	"10,17,21,26"
+"priority_unresolved_clusters_present"	"10,17,21,26"
+"sample_column_unresolved"	"orig.ident"
+"sample_column_full"	"orig.ident"
+"fc_column_detected"	"none_detected"
+"refinement_goal"	"Decide which unresolved clusters should be absorbed into epithelial/acinar pool versus excluded"
+"next_stage"	"62_finalize_malignant_candidate_definition"

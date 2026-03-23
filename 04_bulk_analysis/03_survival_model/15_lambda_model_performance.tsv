@@ -1,0 +1,2 @@
+term	estimate	std.error	statistic	p.value	conf.low	conf.high	model	n_genes
+risk_score	3.77261574052387	0.176528385935078	7.52155855397049	5.4127076081515e-14	2.66920136267909	5.33216778795705	lambda.min	12

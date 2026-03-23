@@ -1,0 +1,9 @@
+decision_item	value
+"main_dataset_selected"	"TRUE"
+"main_dataset_accession"	"GSE155698"
+"validation_dataset_selected"	"TRUE"
+"validation_dataset_accession"	"CRA001160"
+"supplementary_dataset_accession"	"GSE205013"
+"minimum_candidate_dataset_n"	"3"
+"current_stage"	"dataset_selection_fixed"
+"recommended_next_action"	"Start 49: download preparation and dataset-level metadata audit before Seurat preprocessing"

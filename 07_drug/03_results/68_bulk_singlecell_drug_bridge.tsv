@@ -1,0 +1,7 @@
+bridge_item	bridge_text
+"bulk_risk_model"	"The frozen 12-gene signature captures a risk-associated transcriptional program in TCGA-PAAD."
+"frozen_signature_genes"	"LCP1, GBP4, MET, SNAPC4, TGFBI, SLC25A11, RFC4, IDO1, NMUR1, NDUFA7, INHBA, IL15RA"
+"single_cell_localization"	"Single-cell analysis showed that this program was primarily localized to a subset of ductal-like malignant epithelial cells."
+"drug_result_core_pattern"	"Predicted drug response analysis suggested that several cytotoxic or multi-kinase agents were relatively favored in the low-risk group, whereas Trametinib showed an opposite pattern favoring the high-risk group."
+"translational_interpretation"	"These findings imply that the prognostic program may not only stratify survival risk, but may also reflect distinct therapeutic vulnerabilities across transcriptionally defined risk states."
+"manuscript_caution"	"All drug sensitivity findings should be described as transcriptome-inferred predicted response rather than confirmed clinical efficacy."

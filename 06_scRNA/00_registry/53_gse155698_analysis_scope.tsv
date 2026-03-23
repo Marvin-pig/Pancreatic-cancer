@@ -1,0 +1,5 @@
+item	value
+"primary_analysis_scope"	"PDAC_TISSUE_*"
+"adjacent_normal_scope"	"AdjNorm_TISSUE_*"
+"pbmc_scope"	"Exclude PDAC_PBMC_* and Healthy_PBMC_* from current tumor-tissue main analysis"
+"current_recommended_import_order"	"First import tumor_tissue samples that are import_ready == YES"

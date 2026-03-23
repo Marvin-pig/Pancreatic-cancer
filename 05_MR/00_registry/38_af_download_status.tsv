@@ -1,0 +1,2 @@
+file	exists_before	attempted_download	exists_after	message
+05_MR/01_raw_data/exposure/eQTLGen/36_eqtlgen_allele_frequencies.txt.gz	FALSE	TRUE	FALSE	cannot open URL 'https://download.gcc.rug.nl/downloads/eqtlgen/cis-eqtl/eQTLGen_AF.txt.gz'

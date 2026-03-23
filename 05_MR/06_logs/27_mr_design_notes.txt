@@ -1,0 +1,24 @@
+MR project design notes
+Created at: 2026-03-19 16:11:46.44127
+
+[Primary aim]
+Evaluate potential causal effects of genetically predicted gene expression / protein abundance on pancreatic cancer risk or prognosis-related traits.
+
+[Current candidate targets]
+LCP1, GBP4, MET, SNAPC4, TGFBI, SLC25A11, RFC4, IDO1, NMUR1, NDUFA7, INHBA, IL15RA, GPX4, SLC31A1, ABI1, FLNA, CXCL9, CXCL10, CXCL11, FGL2, IL7R, CMKLR1, NOTCH2, TGFBR3
+
+[Suggested primary exposure types]
+1. cis-eQTL for signature genes / mechanism genes
+2. pQTL if available for key proteins
+
+[Suggested primary outcomes]
+1. Pancreatic cancer risk GWAS
+2. If feasible, PDAC-specific outcome datasets
+
+[Core MR quality rules]
+1. Instrument SNPs should satisfy genome-wide or predefined significance threshold
+2. F-statistic should be checked
+3. LD clumping is required
+4. Harmonization and palindromic SNP handling must be explicit
+5. Sensitivity analyses should include heterogeneity / pleiotropy tests when instrument count permits
+6. Colocalization should be considered for high-priority positive findings

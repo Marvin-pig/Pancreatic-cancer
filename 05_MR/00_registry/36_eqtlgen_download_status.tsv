@@ -1,0 +1,4 @@
+item	url	dest	exists	ok	message	size_bytes
+significant_cis_eqtls	https://download.gcc.rug.nl/downloads/eqtlgen/cis-eqtl/2019-12-11-cis-eQTLsFDR0.05-ProbeLevel-CohortInfoRemoved-BonferroniAdded.txt.gz	05_MR/01_raw_data/exposure/eQTLGen/36_eqtlgen_significant_cis_eqtls.txt.gz	TRUE	TRUE	""	322775879
+allele_frequencies	https://download.gcc.rug.nl/downloads/eqtlgen/cis-eqtl/eQTLGen_AF.txt.gz	05_MR/01_raw_data/exposure/eQTLGen/36_eqtlgen_allele_frequencies.txt.gz	FALSE	FALSE	cannot open URL 'https://download.gcc.rug.nl/downloads/eqtlgen/cis-eqtl/eQTLGen_AF.txt.gz'	
+readme_cis	https://download.gcc.rug.nl/downloads/eqtlgen/cis-eqtl/README_cis	05_MR/01_raw_data/exposure/eQTLGen/36_eqtlgen_README_cis.txt	TRUE	TRUE	""	1645

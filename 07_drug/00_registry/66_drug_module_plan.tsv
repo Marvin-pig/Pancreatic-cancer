@@ -1,0 +1,9 @@
+item	value
+"module_name"	"drug_sensitivity_and_repositioning"
+"current_stage"	"initialization"
+"primary_goal"	"complete translational extension of bulk risk model"
+"primary_analysis_line"	"predicted_drug_sensitivity_between_high_low_risk_groups"
+"secondary_analysis_line"	"drug_repositioning_based_on_risk_associated_gene_programs"
+"main_dataset"	"TCGA-PAAD training cohort"
+"risk_group_source"	"frozen 12-gene signature with training median cutoff"
+"next_step"	"67_run_predicted_drug_sensitivity_analysis"

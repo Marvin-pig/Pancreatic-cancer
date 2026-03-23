@@ -1,0 +1,16 @@
+34 outcome-first real data attachment notes
+Created at: 2026-03-19 17:20:58.134238
+
+[What this script does]
+1. Attach manual PanScan/PanC4 file if provided
+2. Check OpenGWAS BBJ access using JWT
+3. Decide whether any outcome route is ready
+
+[Preferred route]
+Primary outcome = local PanScan/PanC4 file
+
+[Fallback route]
+BBJ (bbj-a-140) if OpenGWAS access works
+
+[Next step]
+Once any outcome route is ready, move to exposure data attachment.

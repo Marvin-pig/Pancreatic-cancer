@@ -1,0 +1,6 @@
+step_id	task	status
+28A	prepare OpenGWAS account/JWT if using API-based outcome access	TODO
+28B	confirm source and file path for PanScan/PanC4 summary statistics	TODO
+29A	obtain eQTLGen cis-eQTL summary statistics or gene-level query interface	TODO
+29B	obtain GTEx pancreas cis-eQTL resource for backup/supporting analysis	TODO
+30	run primary MR for batch1_priority genes	TODO

@@ -1,0 +1,6 @@
+item_id	task	destination	status
+30A	Download / prepare eQTLGen cis-eQTL data for batch1 genes	05_MR/01_raw_data/exposure/eQTLGen/	TODO
+30B	Download / prepare GTEx pancreas cis-eQTL data for batch1 genes	05_MR/01_raw_data/exposure/GTEx_pancreas/	TODO
+30C	Obtain PanScan/PanC4 pancreatic cancer GWAS summary statistics	05_MR/01_raw_data/outcome/PanScan_PanC4/	TODO
+30D	Prepare OpenGWAS JWT token if BBJ sensitivity outcome will be used	05_MR/00_registry/29_mr_access_config.tsv	TODO
+30E	Place files into expected local directories and update config	05_MR/01_raw_data/...	TODO

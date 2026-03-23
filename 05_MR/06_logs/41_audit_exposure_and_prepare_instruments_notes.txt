@@ -1,0 +1,20 @@
+=== Code 41 Summary ===
+Created at: 2026-03-20 11:36:33.124583
+
+[Goal]
+Audit official exposure files and prepare candidate instruments before clumping.
+
+[Thresholds]
+Strict threshold: p < 5e-08
+Relax threshold : p < 1e-05
+
+[Outputs]
+- 41_exposure_schema_audit.tsv
+- 41_exposure_row_qc_summary.tsv
+- 41_instrument_summary.tsv
+- 41_status_summary.tsv
+- 41_<GENE>_exposure_qc.tsv
+- 41_<GENE>_instrument_candidates_strict.tsv
+- 41_<GENE>_instrument_candidates_relax.tsv
+- 41_bbj_outcome_snp_list_strict.tsv
+- 41_bbj_outcome_snp_list_relax.tsv

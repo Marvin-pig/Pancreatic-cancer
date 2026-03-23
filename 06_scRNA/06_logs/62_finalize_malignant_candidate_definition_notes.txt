@@ -1,0 +1,8 @@
+62 completed
+Created at: 2026-03-22 16:34:08.751378
+
+[Goal]
+Finalize malignant candidate pool and compute MCD / 12-gene signature module scores.
+
+[Next step]
+Visualize MCD focus genes and signature score distribution in malignant candidate pool.

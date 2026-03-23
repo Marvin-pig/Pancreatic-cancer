@@ -1,0 +1,16 @@
+40 manual AF parsing notes
+Created at: 2026-03-20 11:28:18.063142
+
+[Manual config used]
+freq_col_name = AlleleB_all
+freq_is_for   = AlleleB
+af_chr_col    = hg19_chr
+af_pos_col    = hg19_pos
+
+[Outputs]
+- 40_af_full_header.tsv
+- 40_af_preview_20rows.tsv
+- 40_manual_af_config.tsv
+- 40_gene_reconstruction_audit.tsv
+- 40_gene_row_qc_summary.tsv
+- 40_status_summary.tsv

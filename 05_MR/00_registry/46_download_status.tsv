@@ -1,0 +1,4 @@
+url	dest	exists	ok	message	size_bytes
+"https://ftp.ncbi.nlm.nih.gov/dbgap/studies/phs000206/analyses/phs000206.pha002874.txt.gz"	"05_MR/01_raw_data/outcome/PanScan_PanC4/phs000206.pha002874.txt.gz"	TRUE	TRUE	""	18178568
+"https://ftp.ncbi.nlm.nih.gov/dbgap/studies/phs000206/analyses/phs000206.pha002889.txt.gz"	"05_MR/01_raw_data/outcome/PanScan_PanC4/phs000206.pha002889.txt.gz"	TRUE	TRUE	""	19802206
+"https://ftp.ncbi.nlm.nih.gov/dbgap/studies/phs000206/analyses/phs000206.pha012458.txt"	"05_MR/01_raw_data/outcome/PanScan_PanC4/phs000206.pha012458.txt"	TRUE	TRUE	""	255722

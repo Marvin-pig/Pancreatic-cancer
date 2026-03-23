@@ -1,0 +1,4 @@
+file	full_path	n_header_cols	has_ID	has_Chr	has_Position	has_Allele1	has_Allele2	has_Freq1	has_Effect	has_StdErr	has_Pvalue	has_hg19_chr	has_hg19_pos	score
+"phs000206.pha002874.txt.gz"	"05_MR/01_raw_data/outcome/PanScan_PanC4/phs000206.pha002874.txt.gz"	2	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	0
+"phs000206.pha002889.txt.gz"	"05_MR/01_raw_data/outcome/PanScan_PanC4/phs000206.pha002889.txt.gz"	2	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	0
+"phs000206.pha012458.txt"	"05_MR/01_raw_data/outcome/PanScan_PanC4/phs000206.pha012458.txt"	2	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	0

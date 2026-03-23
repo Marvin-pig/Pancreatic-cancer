@@ -1,0 +1,7 @@
+item	value
+significant_file_downloaded	TRUE
+allele_freq_file_downloaded	FALSE
+readme_downloaded	TRUE
+significant_preview_readable	TRUE
+gene_col_detected	Gene
+recommended_next_action	Proceed to 37: inspect column schema and split official eQTLGen file into gene-level candidate tables

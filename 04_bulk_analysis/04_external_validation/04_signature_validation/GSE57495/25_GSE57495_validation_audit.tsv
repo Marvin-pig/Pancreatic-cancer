@@ -1,0 +1,14 @@
+metric	value
+n_signature_genes_total	12
+n_signature_genes_found	12
+n_signature_genes_missing	0
+genes_missing_names	none
+n_matched_samples	63
+n_events	42
+training_cutoff	-0.038751
+external_median_cutoff	-0.114169
+n_high_training_cutoff	26
+n_low_training_cutoff	37
+n_high_external_median	32
+n_low_external_median	31
+os_time_unit_conversion_applied	none

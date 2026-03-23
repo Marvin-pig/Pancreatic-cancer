@@ -1,0 +1,10 @@
+item	value
+"stage55_completed"	"TRUE"
+"raw_object_loaded"	"TRUE"
+"qc_metrics_per_cell_written"	"TRUE"
+"qc_metrics_by_sample_written"	"TRUE"
+"filter_rule_written"	"TRUE"
+"post_qc_object_written"	"TRUE"
+"n_cells_pre_qc"	"47256"
+"n_cells_post_qc"	"41507"
+"next_stage"	"56_normalization_hvg_and_batch_check"

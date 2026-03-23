@@ -1,0 +1,4 @@
+"endpoint","preferred_for_main_analysis","time_variable_name","status_variable_name","time_unit","event_code","missing_value_rule","note"
+"OS","YES","OS.time","OS","days","1=death, 0=censored","drop_if_missing","主分析推荐使用 OS；外部队列若无 DSS/PFI，可仅统一做 OS"
+"DSS","NO","DSS.time","DSS","days","1=disease_specific_death, 0=other/censored","drop_if_missing","仅在定义清晰时使用"
+"PFI","NO","PFI.time","PFI","days","1=progression_or_death, 0=censored","drop_if_missing","不同数据库定义差异较大，谨慎使用"

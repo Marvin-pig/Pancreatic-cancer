@@ -1,0 +1,3 @@
+check_item	status
+outcome_file_exists	FALSE
+outcome_template_copy_exists	TRUE

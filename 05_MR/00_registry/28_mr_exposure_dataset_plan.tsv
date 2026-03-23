@@ -1,0 +1,3 @@
+exposure_dataset	role	ancestry	priority	access_method	note
+eQTLGen_whole_blood_cis_eQTL	primary_exposure_source	predominantly_European	HIGH	download summary stats / OpenGWAS-compatible processing	best first-pass broad coverage for candidate genes
+GTEx_v8_pancreas_cis_eQTL	tissue_specific_supporting_exposure	mixed_but_mainly_European	MEDIUM	GTEx portal / processed cis-eQTL resources	used for pancreas-specific biological support, likely fewer genes/instruments

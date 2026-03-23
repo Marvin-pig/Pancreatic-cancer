@@ -1,0 +1,8 @@
+54c completed
+Created at: 2026-03-22 13:16:46.546133
+
+[Key fix]
+If h5 import is unavailable, automatically fall back to matrix/barcodes/features.
+
+[Next step]
+Proceed to QC metrics, mitochondrial percentage calculation, and filtering.

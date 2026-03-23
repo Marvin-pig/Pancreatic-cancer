@@ -1,0 +1,14 @@
+46b completed
+Created at: 2026-03-20 14:43:23.967736
+
+[Goal]
+Find a usable public pancreatic cancer primary outcome study via GWAS Catalog summary statistics API.
+
+[Key outputs]
+- 46b_gwas_catalog_pancreatic_traits.tsv
+- 46b_pancreatic_trait_studies_annotated.tsv
+- 46b_study_overlap_audit.tsv
+- 46b_selected_primary_outcome_candidate.tsv
+- 46b_selected_primary_outcome_overlap.tsv
+- 46b_primary_outcome_attachment_check.tsv
+- 46b_status_summary.tsv

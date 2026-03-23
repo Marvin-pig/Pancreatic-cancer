@@ -1,0 +1,8 @@
+config_key	config_value	description
+opengwas_jwt	""	OpenGWAS JWT token if API access is used
+bbj_outcome_id	bbj-a-140	Sensitivity outcome dataset ID in OpenGWAS
+panscan_panc4_summary_stats_file	""	Local file path to PanScan/PanC4 summary statistics
+eqtlgen_source_mode	local_or_manual_download	Set to 'local' when you have downloaded eQTLGen files
+eqtlgen_local_file	""	Local eQTLGen cis-eQTL summary stats file or folder
+gtex_pancreas_source_mode	local_or_manual_download	Set to 'local' when GTEx pancreas cis-eQTL files are ready
+gtex_pancreas_local_file	""	Local GTEx pancreas cis-eQTL file or folder

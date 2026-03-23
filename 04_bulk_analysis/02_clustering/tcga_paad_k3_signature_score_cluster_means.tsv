@@ -1,0 +1,10 @@
+signature	cluster	mean_score
+cuproptosis	C1	-0.0921629903309692
+cuproptosis	C2	-0.734931832379097
+cuproptosis	C3	0.673637439794933
+disulfidptosis	C1	0.0152178419988716
+disulfidptosis	C2	-0.873932500241948
+disulfidptosis	C3	0.559062806491662
+ferroptosis	C1	0.0325566431074259
+ferroptosis	C2	-0.648212946651044
+ferroptosis	C3	0.373431553964879

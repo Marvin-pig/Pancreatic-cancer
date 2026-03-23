@@ -1,0 +1,4 @@
+contrast	n_FDR_0.05	n_FDR_0.05_logFC_1
+MCD-high vs MCD-low	8352	1297
+MCD-high vs MCD-intermediate	12844	1915
+MCD-intermediate vs MCD-low	6268	1172

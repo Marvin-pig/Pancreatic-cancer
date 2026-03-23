@@ -1,0 +1,6 @@
+item	value
+"top_low_risk_favored_drug"	"Sorafenib"
+"top_low_risk_favored_p_adj"	"4.00438802213145e-15"
+"top_high_risk_favored_drug"	"Trametinib"
+"top_high_risk_favored_p_adj"	"0.000882917166589678"
+"overall_interpretation"	"Predicted drug sensitivity differed between transcriptomically defined risk groups, suggesting distinct therapeutic vulnerabilities."

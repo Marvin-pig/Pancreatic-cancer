@@ -1,0 +1,7 @@
+item	value
+"primary_downstream_focus"	"malignant_refinement"
+"epithelial_focus_definition"	"major_compartment in epithelial or acinar_like"
+"immune_focus_definition"	"major_compartment in myeloid/T_NK/B_plasma"
+"fibroblast_focus_definition"	"major_compartment == fibroblast"
+"unresolved_handling"	"keep separate and re-check before absorption into lineage-specific objects"
+"next_stage"	"61_refine_epithelial_malignant_compartment"

@@ -1,0 +1,2 @@
+final_model	n_genes	cutoff_rule	lambda_value	risk_score_formula
+lambda.min	12	training median	0.0351285803791572	risk_score = -0.251827 * LCP1 + 0.187698 * GBP4 + 0.164492 * MET + -0.162120 * SNAPC4 + 0.161713 * TGFBI + -0.155789 * SLC25A11 + 0.145373 * RFC4 + 0.141632 * IDO1 + -0.127257 * NMUR1 + -0.093429 * NDUFA7 + 0.073429 * INHBA + 0.049788 * IL15RA

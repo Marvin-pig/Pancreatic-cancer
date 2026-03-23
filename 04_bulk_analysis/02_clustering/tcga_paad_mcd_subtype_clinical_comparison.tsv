@@ -1,0 +1,5 @@
+variable	variable_type	test	p_value	p_adj_BH
+age_at_diagnosis_years	continuous	Kruskal-Wallis	0.621329681142472	0.627266553008578
+gender_final	categorical	Chi-square	0.627266553008578	0.627266553008578
+ajcc_stage_final	categorical	Fisher(simulated)	0.274862568715642	0.627266553008578
+tumor_grade_final	categorical	Fisher(simulated)	0.469265367316342	0.627266553008578

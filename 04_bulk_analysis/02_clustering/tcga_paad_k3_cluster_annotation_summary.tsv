@@ -1,0 +1,4 @@
+cluster	mean_MCD_overall_score	subtype_label
+C2	-0.752359093090697	MCD-low
+C1	-0.0147961684082239	MCD-intermediate
+C3	0.535377266750491	MCD-high

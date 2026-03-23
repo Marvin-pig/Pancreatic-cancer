@@ -1,0 +1,19 @@
+=== Code 42 Summary ===
+Created at: 2026-03-20 11:44:42.980517
+
+[Goal]
+Perform LD clumping for strict and relax candidate instruments, then prepare final BBJ SNP lists.
+
+[Parameters]
+pop = EUR
+clump_kb = 10000
+clump_r2 = 0.001
+min_primary_iv_n = 3
+
+[Outputs]
+- 42_clumping_summary_strict.tsv
+- 42_clumping_summary_relax.tsv
+- 42_primary_instrument_choice.tsv
+- 42_status_summary.tsv
+- 42_clumped_instruments_primary_all_genes.tsv
+- 42_bbj_outcome_snp_list_primary.tsv

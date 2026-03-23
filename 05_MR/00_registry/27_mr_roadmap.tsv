@@ -1,0 +1,7 @@
+step_id	step_name	status
+27	build MR workspace and target registry	DONE
+28	select exposure and outcome datasets	TODO
+29	download / prepare MR summary statistics	TODO
+30	run primary MR	TODO
+31	run sensitivity analyses	TODO
+32	prioritize findings for colocalization / interpretation	TODO

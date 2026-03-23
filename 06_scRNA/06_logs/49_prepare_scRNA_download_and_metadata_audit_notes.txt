@@ -1,0 +1,17 @@
+49 completed
+Created at: 2026-03-22 10:46:41.644947
+
+[Goal]
+Prepare scRNA download plan and metadata/file audit framework before Seurat preprocessing.
+
+[Main dataset]
+GSE155698
+
+[Validation dataset]
+CRA001160
+
+[Supplementary dataset]
+GSE205013
+
+[Next step]
+Start 50: manually download files and fill file/metadata/sample audit templates.

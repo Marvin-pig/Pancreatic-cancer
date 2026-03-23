@@ -1,0 +1,7 @@
+init_time: 2026-03-16 14:01:46
+project_root: /Users/wmz_mac/Desktop/胰腺癌
+created_files:
+  - 01_metadata/cohort_manifest_template.csv
+  - 01_metadata/endpoint_definition_template.csv
+  - 01_metadata/study_registry.tsv
+  - 02_gene_sets/metabolic_cell_death_gene_seed.tsv

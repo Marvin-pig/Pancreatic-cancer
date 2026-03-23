@@ -1,0 +1,8 @@
+60 completed
+Created at: 2026-03-22 16:05:52.699245
+
+[Goal]
+Split major compartments and prepare malignant-focused downstream analysis.
+
+[Next step]
+Refine epithelial/malignant compartment and revisit epithelial-adjacent unresolved clusters.

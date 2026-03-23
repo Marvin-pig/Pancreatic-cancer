@@ -1,0 +1,16 @@
+column_name
+Pvalue
+SNP
+SNPChr
+SNPPos
+AssessedAllele
+OtherAllele
+Zscore
+Gene
+GeneSymbol
+GeneChr
+GenePos
+NrCohorts
+NrSamples
+FDR
+BonferroniP

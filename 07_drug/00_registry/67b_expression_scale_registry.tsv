@@ -1,0 +1,4 @@
+item	value
+"expression_object"	"02_processed_data/TCGA_PAAD/tcga_paad_expr_strict_pdac_symbol_counts_filtered.rds"
+"expression_scale_inference"	"counts_like"
+"recommended_action"	"convert_to_logCPM_before_drug_prediction"

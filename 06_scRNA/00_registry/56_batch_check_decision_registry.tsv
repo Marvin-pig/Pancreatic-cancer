@@ -1,0 +1,9 @@
+item	value
+"dataset"	"GSE155698"
+"analysis_scope"	"tumor tissue only"
+"n_cells_post_qc"	"41507"
+"normalization_method"	"LogNormalize"
+"hvg_n"	"2000"
+"pca_npcs"	"30"
+"current_decision"	"batch_check_first"
+"decision_note"	"Inspect 56_pca_by_sample.pdf and 56_pca_batch_check_summary.tsv before deciding Harmony/RPCA integration"

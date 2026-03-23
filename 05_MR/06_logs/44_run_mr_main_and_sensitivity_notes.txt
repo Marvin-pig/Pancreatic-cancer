@@ -1,0 +1,22 @@
+=== Code 44 Summary ===
+Created at: 2026-03-20 12:37:16.068753
+
+[Goal]
+Run MR main analysis and sensitivity analyses based on harmonised mr_keep data.
+
+[Outputs]
+- 44_mr_main_results.tsv
+- 44_mr_heterogeneity.tsv
+- 44_mr_pleiotropy.tsv
+- 44_mr_singlesnp.tsv
+- 44_mr_leaveoneout.tsv
+- 44_method_audit.tsv
+- 44_reporting_decision.tsv
+- 44_main_text_candidate_results.tsv
+- 44_status_summary.tsv
+
+[Figures for multi-SNP genes]
+- 44_<GENE>_scatter.pdf
+- 44_<GENE>_forest.pdf
+- 44_<GENE>_leaveoneout.pdf
+- 44_<GENE>_funnel.pdf

@@ -1,0 +1,6 @@
+Created at: 2026-03-23 14:52:17.515679
+Source root: /Users/wmz_mac/Desktop/胰腺癌
+Target root: /Users/wmz_mac/Desktop/pancreas
+Files uploaded to slim repo: 622
+Files excluded: 2350
+Total upload size (MB): 232.93

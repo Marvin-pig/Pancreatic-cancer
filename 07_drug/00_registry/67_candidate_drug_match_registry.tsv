@@ -1,0 +1,13 @@
+candidate_drug	matched
+"Erlotinib"	TRUE
+"Gemcitabine"	TRUE
+"Paclitaxel"	TRUE
+"Cisplatin"	TRUE
+"Oxaliplatin"	TRUE
+"5-Fluorouracil"	TRUE
+"Irinotecan"	TRUE
+"Trametinib"	TRUE
+"Selumetinib"	TRUE
+"Bortezomib"	TRUE
+"Sorafenib"	TRUE
+"Dasatinib"	TRUE

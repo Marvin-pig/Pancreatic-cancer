@@ -1,0 +1,14 @@
+=== Code 36 Summary ===
+Created at: 2026-03-20 10:39:26.808196
+
+[Downloaded resources]
+significant_cis_eqtls, allele_frequencies, readme_cis
+
+[Significant file preview readable]
+TRUE
+
+[Detected gene column]
+Gene
+
+[Next step]
+Proceed to 37: inspect column schema and split official eQTLGen file into gene-level candidate tables

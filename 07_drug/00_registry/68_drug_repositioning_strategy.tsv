@@ -1,0 +1,7 @@
+item	value
+"current_stage"	"drug_interpretation_and_repositioning_setup"
+"primary_goal"	"connect predicted drug response with bulk/single-cell biology"
+"first_layer_output"	"ranked drug direction summary"
+"second_layer_output"	"biological interpretation and manuscript-ready bridge"
+"current_decision"	"prioritize interpretation of candidate-drug panel before broader reversal screening"
+"next_stage"	"69_prepare_drug_result_paragraph_and_figure_layout"

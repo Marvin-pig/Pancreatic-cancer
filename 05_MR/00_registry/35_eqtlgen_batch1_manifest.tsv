@@ -1,0 +1,11 @@
+gene	eqtlgen_expected_tsv	gtex_pancreas_expected_zip	gtex_whole_blood_expected_zip	eqtlgen_present	priority
+CXCL10	05_MR/01_raw_data/exposure/eQTLGen/CXCL10_cis_eqtl.tsv	05_MR/01_raw_data/exposure/GTEx_pancreas/Pancreas.zip	05_MR/01_raw_data/exposure/GTEx_whole_blood/Whole_Blood.zip	FALSE	HIGH
+GBP4	05_MR/01_raw_data/exposure/eQTLGen/GBP4_cis_eqtl.tsv	05_MR/01_raw_data/exposure/GTEx_pancreas/Pancreas.zip	05_MR/01_raw_data/exposure/GTEx_whole_blood/Whole_Blood.zip	FALSE	HIGH
+GPX4	05_MR/01_raw_data/exposure/eQTLGen/GPX4_cis_eqtl.tsv	05_MR/01_raw_data/exposure/GTEx_pancreas/Pancreas.zip	05_MR/01_raw_data/exposure/GTEx_whole_blood/Whole_Blood.zip	FALSE	HIGH
+IDO1	05_MR/01_raw_data/exposure/eQTLGen/IDO1_cis_eqtl.tsv	05_MR/01_raw_data/exposure/GTEx_pancreas/Pancreas.zip	05_MR/01_raw_data/exposure/GTEx_whole_blood/Whole_Blood.zip	FALSE	HIGH
+IL15RA	05_MR/01_raw_data/exposure/eQTLGen/IL15RA_cis_eqtl.tsv	05_MR/01_raw_data/exposure/GTEx_pancreas/Pancreas.zip	05_MR/01_raw_data/exposure/GTEx_whole_blood/Whole_Blood.zip	FALSE	HIGH
+INHBA	05_MR/01_raw_data/exposure/eQTLGen/INHBA_cis_eqtl.tsv	05_MR/01_raw_data/exposure/GTEx_pancreas/Pancreas.zip	05_MR/01_raw_data/exposure/GTEx_whole_blood/Whole_Blood.zip	FALSE	HIGH
+MET	05_MR/01_raw_data/exposure/eQTLGen/MET_cis_eqtl.tsv	05_MR/01_raw_data/exposure/GTEx_pancreas/Pancreas.zip	05_MR/01_raw_data/exposure/GTEx_whole_blood/Whole_Blood.zip	FALSE	HIGH
+SLC31A1	05_MR/01_raw_data/exposure/eQTLGen/SLC31A1_cis_eqtl.tsv	05_MR/01_raw_data/exposure/GTEx_pancreas/Pancreas.zip	05_MR/01_raw_data/exposure/GTEx_whole_blood/Whole_Blood.zip	FALSE	HIGH
+TGFBI	05_MR/01_raw_data/exposure/eQTLGen/TGFBI_cis_eqtl.tsv	05_MR/01_raw_data/exposure/GTEx_pancreas/Pancreas.zip	05_MR/01_raw_data/exposure/GTEx_whole_blood/Whole_Blood.zip	FALSE	HIGH
+TGFBR3	05_MR/01_raw_data/exposure/eQTLGen/TGFBR3_cis_eqtl.tsv	05_MR/01_raw_data/exposure/GTEx_pancreas/Pancreas.zip	05_MR/01_raw_data/exposure/GTEx_whole_blood/Whole_Blood.zip	FALSE	HIGH

@@ -1,0 +1,3 @@
+id.exposure	id.outcome	outcome	exposure	egger_intercept	se	pval	gene
+"GPX4"	"bbj-a-140"	"Pancreatic cancer || id:bbj-a-140"	"eQTLGen_GPX4"	0.0388774640965098	0.17618504650092	0.861737452584668	"GPX4"
+"SLC31A1"	"bbj-a-140"	"Pancreatic cancer || id:bbj-a-140"	"eQTLGen_SLC31A1"	0.093302778424953	0.138976145534642	0.623602648906113	"SLC31A1"

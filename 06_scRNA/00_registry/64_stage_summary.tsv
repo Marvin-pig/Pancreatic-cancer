@@ -1,0 +1,7 @@
+item	value
+"stage64_completed"	"TRUE"
+"result_digest_written"	"TRUE"
+"figure_layout_written"	"TRUE"
+"cn_paragraph_written"	"TRUE"
+"en_paragraph_written"	"TRUE"
+"next_stage"	"65_prepare_single_cell_figure_legend_and_main_text_polish"

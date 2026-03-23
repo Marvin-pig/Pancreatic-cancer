@@ -1,0 +1,9 @@
+item	value
+"dataset"	"GSE155698"
+"analysis_scope"	"tumor tissue only"
+"preintegration_dims"	"1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20"
+"preintegration_resolution"	"0.5"
+"n_clusters"	"32"
+"n_high_sample_dominance_clusters"	"8"
+"current_decision_rule"	"If many clusters are dominated by single samples and markers are not biologically coherent, move to Harmony"
+"recommended_next_action"	"consider_harmony_integration"

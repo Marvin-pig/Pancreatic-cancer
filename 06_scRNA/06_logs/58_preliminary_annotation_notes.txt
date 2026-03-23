@@ -1,0 +1,11 @@
+58 completed
+Created at: 2026-03-22 15:48:23.963424
+
+[Goal]
+Perform preliminary annotation using canonical markers.
+
+[Key fix]
+Converted cluster_id and marker cluster columns to character before left_join.
+
+[Next step]
+Fill 58_preliminary_cluster_annotation.tsv and define major cell compartments.

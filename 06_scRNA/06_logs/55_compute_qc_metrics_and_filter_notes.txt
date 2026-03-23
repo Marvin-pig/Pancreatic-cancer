@@ -1,0 +1,8 @@
+55 completed
+Created at: 2026-03-22 13:36:59.895784
+
+[Goal]
+Compute QC metrics and filter GSE155698 tumor tissue raw Seurat object.
+
+[Next step]
+Run normalization, HVG selection, and pre-integration batch inspection.

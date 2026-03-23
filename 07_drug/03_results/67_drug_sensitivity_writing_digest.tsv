@@ -1,0 +1,7 @@
+item	value
+"n_candidate_drugs_tested"	"12"
+"best_ranked_drug"	"Sorafenib"
+"best_ranked_drug_full_id"	"Sorafenib_1085"
+"best_ranked_drug_p_adj"	"4.00438802213145e-15"
+"best_ranked_drug_delta_high_minus_low"	"0.657687959255457"
+"best_ranked_direction"	"low_risk_more_sensitive"

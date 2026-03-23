@@ -1,0 +1,17 @@
+=== MR access preparation notes ===
+Created at: 2026-03-19 16:31:42.267876
+Script: 29_prepare_openGWAS_and_eqtlgen_access.R
+batch1 gene count: 10
+
+[Current status]
+MR execution framework is ready.
+Raw exposure/outcome summary statistics are NOT yet attached.
+
+[Immediate next actions]
+1. Open and fill 29_mr_access_config.tsv with actual file paths / tokens
+2. Place local eQTLGen / GTEx / PanScan-PanC4 files in 01_raw_data/
+3. If using OpenGWAS API, prepare JWT token and confirm bbj-a-140 access
+4. Re-run preflight checklist to verify all data sources before MR
+
+[Do NOT run main MR yet]
+Run MR only after at least one exposure source AND one outcome source are confirmed.

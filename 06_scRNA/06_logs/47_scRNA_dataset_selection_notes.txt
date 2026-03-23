@@ -1,0 +1,14 @@
+47 scRNA dataset selection notes
+Created at: 2026-03-22 10:22:23.003319
+
+[Goal]
+Prepare pancreatic cancer scRNA-seq dataset selection framework
+for downstream malignant-cell localisation, TME mapping,
+12-gene signature positioning, and cell-cell communication analysis.
+
+[Expected minimum deliverables]
+1. At least 3 candidate scRNA datasets
+2. 1 main dataset selected
+3. 1 validation dataset selected
+
+[Do not start Seurat workflow until dataset selection is fixed.]

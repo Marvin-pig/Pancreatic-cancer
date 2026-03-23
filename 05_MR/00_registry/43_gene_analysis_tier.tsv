@@ -1,0 +1,9 @@
+gene	n_exp_snps	n_outcome_rows	n_harmonised_rows	n_mr_keep	outcome_id	analysis_tier
+"CXCL10"	1	1	1	1	"bbj-a-140"	"single_snp_wald_ratio"
+"GBP4"	2	2	2	2	"bbj-a-140"	"few_snp_exploratory"
+"GPX4"	3	3	3	3	"bbj-a-140"	"multi_snp_priority"
+"IDO1"	2	2	2	2	"bbj-a-140"	"few_snp_exploratory"
+"IL15RA"	4	2	2	2	"bbj-a-140"	"few_snp_exploratory"
+"SLC31A1"	3	3	3	3	"bbj-a-140"	"multi_snp_priority"
+"TGFBI"	6	2	2	2	"bbj-a-140"	"few_snp_exploratory"
+"TGFBR3"	2	2	2	2	"bbj-a-140"	"few_snp_exploratory"

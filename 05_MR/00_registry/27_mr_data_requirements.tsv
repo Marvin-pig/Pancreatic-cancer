@@ -1,0 +1,8 @@
+item	status	note
+exposure_summary_statistics	TODO	cis-eQTL or pQTL summary data for selected genes
+outcome_summary_statistics	TODO	pancreatic cancer GWAS summary statistics
+gene_to_exposure_mapping	TODO	match genes to available eQTL/pQTL datasets
+instrument_selection_rules	TODO	p threshold, LD clumping, F-statistics
+harmonization_rules	TODO	effect allele alignment and palindromic handling
+sensitivity_analysis_plan	TODO	MR-Egger / weighted median / heterogeneity where applicable
+colocalization_candidate_list	TODO	apply to top positive MR signals

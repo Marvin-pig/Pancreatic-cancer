@@ -1,0 +1,6 @@
+item	value
+"main_scRNA_dataset"	"GSE155698"
+"supplementary_scRNA_dataset"	"GSE205013"
+"cra001160_current_role"	"metadata_only"
+"current_focus"	"identify_true_import_files_for_GSE155698"
+"next_step"	"write Seurat import precheck script after confirming matrix/barcodes/features or direct object"

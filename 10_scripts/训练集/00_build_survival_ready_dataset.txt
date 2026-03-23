@@ -1,0 +1,266 @@
+# =========================
+# 00_build_survival_ready_dataset.R
+# 目的：
+# 1. 读取 strict-PDAC cohort、表达矩阵、MCD subtype
+# 2. 自动识别常见 OS 字段，兼容 TCGA 字符型 vital_status
+# 3. 处理 TCGA barcode 长度不一致问题
+# 4. 生成 survival-ready 数据表及对齐的表达矩阵
+# 5. 基本审计，避免后续 Cox / LASSO 返工
+# =========================
+suppressPackageStartupMessages({
+  library(data.table)
+  library(dplyr)
+})
+
+# ---------- 文件路径 ----------
+cohort_file  <- "02_processed_data/TCGA_PAAD/tcga_paad_cohort_master_strict_pdac_ordered.tsv"
+subtype_file <- "04_bulk_analysis/02_clustering/tcga_paad_mcd_subtype_phenotype.tsv"
+expr_file    <- "02_processed_data/TCGA_PAAD/tcga_paad_expr_strict_pdac_symbol_counts_filtered.rds"
+out_dir <- "04_bulk_analysis/03_survival_model"
+dir.create(out_dir, recursive = TRUE, showWarnings = FALSE)
+
+# ---------- 读取 ----------
+cohort  <- as.data.frame(fread(cohort_file))
+subtype <- as.data.frame(fread(subtype_file))
+expr    <- readRDS(expr_file)
+
+# 兼容 SummarizedExperiment / DESeqDataSet / matrix / data.frame
+if (is(expr, "SummarizedExperiment")) {
+  expr <- assay(expr, "counts")
+}
+if (!is.matrix(expr) && !is.data.frame(expr)) {
+  stop("expr 类型无法识别，期望 matrix/data.frame/SummarizedExperiment，实际为: ", class(expr))
+}
+
+cat("Cohort dim:", dim(cohort), "\n")
+cat("Subtype dim:", dim(subtype), "\n")
+cat("Expr dim:", dim(expr), "\n")
+cat("Expr colnames (前5):", head(colnames(expr), 5), "\n")
+
+# ---------- 辅助函数 ----------
+pick_first_existing <- function(df, candidates) {
+  hit <- candidates[candidates %in% colnames(df)]
+  if (length(hit) == 0) return(NA_character_)
+  hit[1]
+}
+
+# TCGA barcode 截断到指定位数（默认 sample-level = 前15位，含 tumor/normal 类型码）
+# 完整 barcode 示例: TCGA-IB-7651-01A-11R-2125-07 (28位)
+# patient-level:     TCGA-IB-7651              (12位)
+# sample-level:      TCGA-IB-7651-01           (15位)
+# 带 vial:           TCGA-IB-7651-01A          (16位)
+trunc_barcode <- function(x, npart = 4) {
+  # 按 "-" 分割，保留前 npart 段
+  sapply(strsplit(as.character(x), "-"), function(s) {
+    paste(s[seq_len(min(length(s), npart))], collapse = "-")
+  })
+}
+
+# 将 TCGA vital_status 字符型转为 0/1 数值
+# 支持: Dead/dead/DEAD/DECEASED → 1; Alive/alive/ALIVE/LIVING → 0
+# 支持: 已是数值 0/1 → 保持不变
+encode_vital_status <- function(x) {
+  x_char <- trimws(tolower(as.character(x)))
+  result <- dplyr::case_when(
+    x_char %in% c("dead", "deceased", "1") ~ 1,
+    x_char %in% c("alive", "living", "0")  ~ 0,
+    TRUE ~ NA_real_
+  )
+  n_na  <- sum(is.na(result))
+  n_tot <- length(result)
+  if (n_na > 0) {
+    uniq_orig <- unique(x[is.na(result)])
+    warning(sprintf(
+      "OS_event 编码：%d/%d 个值无法识别，已置 NA。未识别原始值: %s",
+      n_na, n_tot, paste(head(uniq_orig, 10), collapse = ", ")
+    ))
+  }
+  result
+}
+
+# ---------- 识别列名 ----------
+sample_col_cohort <- pick_first_existing(cohort, c(
+  "sample_id", "SampleID", "sample", "submitter_id", "barcode", "bcr_patient_barcode"
+))
+sample_col_subtype <- pick_first_existing(subtype, c(
+  "sample_id", "SampleID", "sample", "barcode", "submitter_id"
+))
+subtype_col <- pick_first_existing(subtype, c(
+  "mcd_subtype", "MCD_subtype", "subtype", "cluster_label", "Subtype"
+))
+os_time_col <- pick_first_existing(cohort, c(
+  "OS_time", "os_time", "overall_survival_time",
+  "days_to_death_or_last_followup", "days_to_last_follow_up_or_death",
+  "days_to_event", "time"
+))
+os_event_col <- pick_first_existing(cohort, c(
+  "OS_event", "os_event", "overall_survival_event", "vital_status_binary",
+  "vital_status", "event", "status"
+))
+
+if (is.na(sample_col_cohort))  stop("cohort 中未找到样本ID列，可用列: ", paste(colnames(cohort), collapse = ", "))
+if (is.na(sample_col_subtype)) stop("subtype 中未找到样本ID列，可用列: ", paste(colnames(subtype), collapse = ", "))
+if (is.na(subtype_col))        stop("subtype 中未找到亚型列，可用列: ", paste(colnames(subtype), collapse = ", "))
+if (is.na(os_time_col) || is.na(os_event_col)) {
+  stop(paste0(
+    "未能自动识别 OS 字段。\n",
+    "cohort 可用列名为:\n",
+    paste(colnames(cohort), collapse = ", ")
+  ))
+}
+
+cat(sprintf(
+  "识别到的列 → sample_id: [%s], OS_time: [%s], OS_event: [%s], mcd_subtype: [%s]\n",
+  sample_col_cohort, os_time_col, os_event_col, subtype_col
+))
+
+# ---------- 规范化 ----------
+cohort2 <- cohort %>%
+  mutate(
+    sample_id = .data[[sample_col_cohort]],
+    OS_time   = suppressWarnings(as.numeric(.data[[os_time_col]])),
+    # 关键修复：用 encode_vital_status 兼容字符型 vital_status
+    OS_event  = encode_vital_status(.data[[os_event_col]])
+  )
+
+subtype2 <- subtype %>%
+  transmute(
+    sample_id   = .data[[sample_col_subtype]],
+    mcd_subtype = .data[[subtype_col]]
+  )
+
+# ---------- TCGA barcode 匹配策略 ----------
+# 表达矩阵列名通常是完整 barcode（28位），
+# cohort/subtype 可能是患者级（12位）或样本级（15-16位）。
+# 统一截断到 sample-level（前4段，15位），再做 join。
+
+expr_samples_full <- colnames(expr)
+expr_bc4          <- trunc_barcode(expr_samples_full, npart = 4)  # TCGA-XX-XXXX-XX
+# 构建映射：截断 barcode → 完整 barcode（保留每个截断 barcode 第一个匹配）
+bc4_to_full <- setNames(
+  expr_samples_full[!duplicated(expr_bc4)],
+  expr_bc4[!duplicated(expr_bc4)]
+)
+
+cohort2$sample_id_bc4  <- trunc_barcode(cohort2$sample_id,  npart = 4)
+subtype2$sample_id_bc4 <- trunc_barcode(subtype2$sample_id, npart = 4)
+
+n_cohort_match  <- sum(cohort2$sample_id_bc4  %in% names(bc4_to_full))
+n_subtype_match <- sum(subtype2$sample_id_bc4 %in% names(bc4_to_full))
+cat(sprintf(
+  "Barcode（4段截断）匹配率 → cohort: %d/%d，subtype: %d/%d\n",
+  n_cohort_match, nrow(cohort2), n_subtype_match, nrow(subtype2)
+))
+
+# 若截断后匹配率为0，退回精确匹配（原始 barcode 与 expr 列名一致的情况）
+use_bc4 <- (n_cohort_match >= n_subtype_match) && (n_cohort_match > 0)
+
+if (use_bc4) {
+  join_key_cohort  <- "sample_id_bc4"
+  join_key_subtype <- "sample_id_bc4"
+  expr_key         <- expr_bc4
+  cat("使用 4段截断 barcode 进行匹配\n")
+} else {
+  join_key_cohort  <- "sample_id"
+  join_key_subtype <- "sample_id"
+  expr_key         <- expr_samples_full
+  cat("使用原始 barcode 进行精确匹配\n")
+}
+
+# 在 cohort2 / subtype2 中建统一 join key
+cohort2$_join_key  <- cohort2[[join_key_cohort]]
+subtype2$_join_key <- subtype2[[join_key_subtype]]
+
+# ---------- 合并 ----------
+# 注意：先合并临床+亚型，再过滤有表达数据的样本
+dat <- cohort2 %>%
+  inner_join(
+    subtype2 %>% select(`_join_key`, mcd_subtype),
+    by = "_join_key"
+  ) %>%
+  filter(`_join_key` %in% expr_key)
+
+# 去掉辅助列
+dat <- dat %>% select(-sample_id_bc4, -`_join_key`)
+
+cat("合并后 n =", nrow(dat), "\n")
+if (nrow(dat) == 0) {
+  stop(paste0(
+    "合并结果为空！请检查 barcode 格式。\n",
+    "cohort sample_id 示例: ", paste(head(cohort2$sample_id, 3), collapse = ", "), "\n",
+    "expr colnames 示例:    ", paste(head(expr_samples_full, 3), collapse = ", ")
+  ))
+}
+
+# ---------- 基本审计（在清洗前） ----------
+audit <- data.frame(
+  metric = c(
+    "n_cohort_raw",
+    "n_subtype_raw",
+    "n_expr_samples",
+    "n_merged_before_clean",
+    "missing_OS_time",
+    "missing_OS_event",
+    "nonpositive_OS_time",
+    "invalid_OS_event",
+    "duplicated_sample_id",
+    "event_rate_pct"
+  ),
+  value = c(
+    nrow(cohort),
+    nrow(subtype),
+    length(expr_samples_full),
+    nrow(dat),
+    sum(is.na(dat$OS_time)),
+    sum(is.na(dat$OS_event)),
+    sum(dat$OS_time <= 0, na.rm = TRUE),
+    sum(!dat$OS_event %in% c(0, 1), na.rm = TRUE),
+    sum(duplicated(dat$sample_id)),
+    round(100 * mean(dat$OS_event == 1, na.rm = TRUE), 1)
+  )
+)
+fwrite(audit, file.path(out_dir, "00_survival_endpoint_audit.tsv"), sep = "\t")
+cat("\n--- 审计结果 ---\n")
+print(audit)
+
+# ---------- 清洗 survival-ready ----------
+surv_ready <- dat %>%
+  filter(!is.na(OS_time), !is.na(OS_event)) %>%
+  filter(OS_time > 0, OS_event %in% c(0, 1)) %>%
+  distinct(sample_id, .keep_all = TRUE)
+
+cat("\nSurvival-ready n =", nrow(surv_ready), "\n")
+cat("Subtype distribution:\n")
+print(table(surv_ready$mcd_subtype))
+
+if (nrow(surv_ready) == 0) {
+  stop("清洗后样本量为 0，请检查 OS_event 编码及 OS_time 值。")
+}
+
+# ---------- 对齐表达矩阵并保存 ----------
+# 用与 expr 匹配的 key 找回完整 barcode，保证列顺序与 surv_ready 行顺序一致
+if (use_bc4) {
+  surv_ready$expr_barcode <- bc4_to_full[trunc_barcode(surv_ready$sample_id, npart = 4)]
+} else {
+  surv_ready$expr_barcode <- surv_ready$sample_id
+}
+
+# 过滤并对齐
+valid_mask   <- !is.na(surv_ready$expr_barcode) & surv_ready$expr_barcode %in% colnames(expr)
+surv_ready   <- surv_ready[valid_mask, ]
+expr_aligned <- expr[, surv_ready$expr_barcode, drop = FALSE]
+
+# 统一列名为 sample_id（方便后续脚本直接用 surv_ready$sample_id 索引）
+colnames(expr_aligned) <- surv_ready$sample_id
+
+cat("最终对齐后 n =", nrow(surv_ready), "，表达矩阵维度:", dim(expr_aligned), "\n")
+
+# 保存
+fwrite(surv_ready, file.path(out_dir, "01_tcga_strict_pdac_survival_ready.tsv"), sep = "\t")
+saveRDS(expr_aligned,  file.path(out_dir, "01_tcga_strict_pdac_expr_aligned.rds"))
+
+cat("\nDone.\n")
+cat("输出文件:\n")
+cat(" -", file.path(out_dir, "00_survival_endpoint_audit.tsv"), "\n")
+cat(" -", file.path(out_dir, "01_tcga_strict_pdac_survival_ready.tsv"), "\n")
+cat(" -", file.path(out_dir, "01_tcga_strict_pdac_expr_aligned.rds"), "\n")

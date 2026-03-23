@@ -1,0 +1,10 @@
+54 completed
+Created at: 2026-03-22 12:54:47.263737
+
+[Main rule]
+Only PDAC_TISSUE samples are included for main tumor microenvironment analysis.
+AdjNorm_TISSUE samples are optional reference samples.
+PBMC samples are excluded from the primary tumor Seurat object.
+
+[Next step]
+Select true matrix/barcodes/features files from PDAC_TISSUE samples and write Seurat import script.

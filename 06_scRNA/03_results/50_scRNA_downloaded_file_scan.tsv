@@ -1,0 +1,4 @@
+accession	local_dataset_dir	file_name	relative_path	ext	size_bytes	file_exists	likely_counts	likely_barcodes	likely_features	likely_metadata	likely_annotation
+"GSE155698"	"06_scRNA/01_raw_data/GSE155698"	NA	NA	NA	NA	"NO"	"NO"	"NO"	"NO"	"NO"	"NO"
+"CRA001160"	"06_scRNA/01_raw_data/CRA001160"	NA	NA	NA	NA	"NO"	"NO"	"NO"	"NO"	"NO"	"NO"
+"GSE205013"	"06_scRNA/01_raw_data/GSE205013"	NA	NA	NA	NA	"NO"	"NO"	"NO"	"NO"	"NO"	"NO"

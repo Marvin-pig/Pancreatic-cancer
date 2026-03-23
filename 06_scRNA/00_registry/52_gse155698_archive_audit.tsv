@@ -1,0 +1,2 @@
+accession	tar_file	tar_exists	extract_dir	untar_success	untar_message
+"GSE155698"	"06_scRNA/01_raw_data/GSE155698/GSE155698_RAW.tar"	TRUE	"06_scRNA/01_raw_data/GSE155698/extracted"	TRUE	"untar_success"

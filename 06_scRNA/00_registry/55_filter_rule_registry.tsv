@@ -1,0 +1,7 @@
+rule_item	value
+"min_features"	"300"
+"max_features"	"7500"
+"min_counts"	"500"
+"max_percent_mt"	"20"
+"analysis_scope"	"GSE155698 tumor tissue only"
+"rule_note"	"Initial global QC rule; revise only if sample-level diagnostics show obvious distortion"

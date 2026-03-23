@@ -1,0 +1,14 @@
+54g completed
+Created at: 2026-03-22 13:31:56.010185
+
+[Goal]
+Finalize all stage-54 outputs after rescuing sample14 if successful.
+
+[Final outputs]
+- 02_processed_data/54_gse155698_tumor_tissue_raw_seurat_final.rds
+- 00_registry/54_final_import_plan.tsv
+- 05_tables/54_final_pre_qc_summary.tsv
+- 00_registry/54_final_stage_summary.tsv
+
+[Next step]
+Start stage 55: QC metrics, mitochondrial percentage calculation, threshold setting, and pre-filter QC plots.

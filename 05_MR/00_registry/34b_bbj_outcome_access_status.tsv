@@ -1,0 +1,5 @@
+check_item	status
+jwt_present	TRUE
+user_endpoint_status_200	TRUE
+bbj_a_140_access_status_200	TRUE
+any_outcome_route_ready	TRUE

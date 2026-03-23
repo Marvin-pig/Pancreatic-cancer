@@ -1,0 +1,11 @@
+metric	value
+selected_expression_assay	unstranded
+n_expression_samples	183
+n_unique_patients_expression	178
+n_primary_tumor	178
+n_solid_tissue_normal	4
+n_clinical_patients	185
+n_rows_in_sample_clinical_map	183
+n_mapped_samples	183
+n_unmapped_samples	0
+maf_download_success	TRUE

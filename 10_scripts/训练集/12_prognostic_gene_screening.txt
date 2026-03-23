@@ -1,0 +1,255 @@
+# =========================
+# 12_prognostic_gene_screening.R
+# 目的：
+# 1. 整合 MCD 主线候选基因池
+# 2. 从表达矩阵中提取这些基因
+# 3. 基于 OS 做单因素 Cox 批量筛选
+# 4. 输出 shortlist，供 13_lasso_cox_model_train.R 使用
+# =========================
+suppressPackageStartupMessages({
+  library(data.table)
+  library(dplyr)
+  library(survival)
+  library(broom)
+  library(ggplot2)
+  library(stringr)
+})
+
+# ---------- 路径 ----------
+surv_file  <- "04_bulk_analysis/03_survival_model/01_tcga_strict_pdac_survival_ready.tsv"
+expr_file  <- "02_processed_data/TCGA_PAAD/tcga_paad_expr_strict_pdac_symbol_counts_filtered.rds"
+mech_file1 <- "04_bulk_analysis/09_maintext/tcga_paad_mcd_maintext_mechanism_gene_table.tsv"
+mech_file2 <- "04_bulk_analysis/08_mechanism/tcga_paad_mcd_key_mechanism_gene_candidates.tsv"
+out_dir    <- "04_bulk_analysis/03_survival_model"
+dir.create(out_dir, recursive = TRUE, showWarnings = FALSE)
+
+# ---------- 读取 ----------
+surv_dat <- fread(surv_file)
+if (nrow(surv_dat) == 0) stop("Survival file is empty: ", surv_file)
+
+expr <- readRDS(expr_file)
+if (!is.matrix(expr) && !inherits(expr, "Matrix")) {
+  expr <- as.matrix(expr)
+}
+if (is.null(rownames(expr))) {
+  stop("Expression matrix has no rownames; rows must be gene symbols.")
+}
+
+# ---------- 基本检查 ----------
+stopifnot(all(c("sample_id", "OS_time", "OS_event") %in% colnames(surv_dat)))
+
+# FIX: 检查 sample_id 唯一性
+if (anyDuplicated(surv_dat$sample_id)) {
+  warning("Duplicate sample_id found in survival data; keeping first occurrence.")
+  surv_dat <- surv_dat[!duplicated(surv_dat$sample_id), ]
+}
+
+common_samples <- intersect(colnames(expr), surv_dat$sample_id)
+if (length(common_samples) < 30) {
+  stop("Too few overlapping samples between expression matrix and survival data (n=",
+       length(common_samples), "). Check sample_id format.")
+}
+
+surv_dat <- surv_dat %>%
+  filter(sample_id %in% common_samples) %>%
+  arrange(match(sample_id, common_samples))
+
+expr <- expr[, common_samples, drop = FALSE]
+stopifnot(all(colnames(expr) == surv_dat$sample_id))  # alignment guard
+
+# FIX: 检查可用事件数（Cox 最低要求）
+n_events_total <- sum(as.integer(surv_dat$OS_event), na.rm = TRUE)
+cat("Total OS events in overlapping samples:", n_events_total, "\n")
+if (n_events_total < 10) {
+  stop("Fewer than 10 OS events found. Cox regression will be unreliable.")
+}
+
+# ---------- 提取候选基因 ----------
+# FIX: 更宽松的列名匹配，并在找不到时给出明确警告
+extract_gene_symbols <- function(df, source_label = "") {
+  cn <- colnames(df)
+  gene_col_candidates <- c(
+    "gene", "Gene", "gene_symbol", "GeneSymbol", "symbol", "SYMBOL",
+    "external_gene_name", "hgnc_symbol", "Gene.symbol", "gene.symbol"
+  )
+  gene_col <- intersect(gene_col_candidates, cn)
+  if (length(gene_col) == 0) {
+    warning("No recognised gene-symbol column found in ", source_label,
+            ". Available columns: ", paste(cn, collapse = ", "))
+    return(character(0))
+  }
+  genes <- df[[gene_col[1]]]
+  genes <- str_trim(as.character(genes))
+  genes <- genes[nchar(genes) > 0 & !is.na(genes)]
+  unique(genes)
+}
+
+candidate_genes <- character(0)
+if (file.exists(mech_file1)) {
+  x1 <- fread(mech_file1)
+  g1 <- extract_gene_symbols(x1, mech_file1)
+  cat("Genes from mech_file1:", length(g1), "\n")
+  candidate_genes <- c(candidate_genes, g1)
+} else {
+  warning("mech_file1 not found: ", mech_file1)
+}
+if (file.exists(mech_file2)) {
+  x2 <- fread(mech_file2)
+  g2 <- extract_gene_symbols(x2, mech_file2)
+  cat("Genes from mech_file2:", length(g2), "\n")
+  candidate_genes <- c(candidate_genes, g2)
+} else {
+  warning("mech_file2 not found: ", mech_file2)
+}
+
+# ---------- 手动补充核心基因 ----------
+manual_core_genes <- c(
+  "GPX4", "ABI1", "FLNA", "SLC31A1",
+  "CXCL9", "CXCL10", "CXCL11", "FGL2", "IL7R", "CMKLR1",
+  "NOTCH2", "INHBA", "TGFBR3"
+)
+candidate_genes <- unique(c(candidate_genes, manual_core_genes))
+candidate_genes <- intersect(candidate_genes, rownames(expr))
+
+cat("Candidate genes after intersecting with expression matrix:", length(candidate_genes), "\n")
+if (length(candidate_genes) < 5) {
+  stop("Too few candidate genes (", length(candidate_genes),
+       "). Check gene-symbol column names in mechanism tables.")
+}
+
+candidate_gene_pool <- data.frame(gene = candidate_genes, stringsAsFactors = FALSE)
+fwrite(candidate_gene_pool, file.path(out_dir, "12_candidate_gene_pool.tsv"), sep = "\t")
+
+# ---------- 单因素 Cox ----------
+# FIX:
+#   1. var() < eps 替代 sd() == 0，避免浮点陷阱
+#   2. 增加 n_samples / n_events 输出，便于审核
+#   3. 增加 log2_HR 输出，供下游 LASSO 使用
+MIN_VAR <- .Machine$double.eps^0.5   # 方差阈值，低于此视为常数基因
+
+run_univcox_one_gene <- function(gene, expr_mat, clin_df) {
+  vec <- as.numeric(expr_mat[gene, ])
+  tmp <- data.frame(
+    OS_time   = as.numeric(clin_df$OS_time),
+    OS_event  = as.numeric(clin_df$OS_event),
+    gene_expr = vec,
+    stringsAsFactors = FALSE
+  )
+  tmp <- tmp[!is.na(tmp$OS_time) & !is.na(tmp$OS_event) & !is.na(tmp$gene_expr), ]
+
+  n_samples <- nrow(tmp)
+  n_events  <- sum(tmp$OS_event)
+
+  # FIX: 浮点安全的零方差检查
+  if (var(tmp$gene_expr) < MIN_VAR) return(NULL)
+  # FIX: 事件数过少时跳过（防止 HR 发散）
+  if (n_events < 5) return(NULL)
+
+  fit <- tryCatch(
+    coxph(Surv(OS_time, OS_event) ~ gene_expr, data = tmp),
+    error = function(e) NULL
+  )
+  if (is.null(fit)) return(NULL)
+
+  res <- broom::tidy(fit, exponentiate = TRUE, conf.int = TRUE)
+  if (nrow(res) == 0) return(NULL)
+
+  data.frame(
+    gene      = gene,
+    HR        = res$estimate[1],
+    log2_HR   = log2(res$estimate[1]),   # FIX: 新增，便于下游
+    CI_low    = res$conf.low[1],
+    CI_high   = res$conf.high[1],
+    p.value   = res$p.value[1],
+    statistic = res$statistic[1],
+    n_samples = n_samples,               # FIX: 新增，模型透明度
+    n_events  = n_events,                # FIX: 新增，模型透明度
+    stringsAsFactors = FALSE
+  )
+}
+
+cat("Running univariable Cox for", length(candidate_genes), "genes...\n")
+cox_list <- lapply(candidate_genes, run_univcox_one_gene,
+                   expr_mat = expr, clin_df = surv_dat)
+cox_res <- bind_rows(cox_list)   # dplyr::bind_rows 会自动丢弃 NULL 元素
+
+if (nrow(cox_res) == 0) {
+  stop("No univariable Cox results produced. Check expression data and survival columns.")
+}
+
+cox_res <- cox_res %>%
+  arrange(p.value) %>%
+  mutate(FDR = p.adjust(p.value, method = "BH"))
+
+fwrite(cox_res, file.path(out_dir, "12_univcox_candidate_genes.tsv"), sep = "\t")
+cat("Cox results written for", nrow(cox_res), "genes.\n")
+
+# ---------- shortlist 规则 ----------
+# 优先保留 p < 0.1（已按 p.value 升序）；
+# FIX: 若不足 8 个，从剩余基因中补足至 15，而非直接替换
+# 若超过 25 个，截取前 25
+shortlist <- cox_res %>% filter(p.value < 0.1)
+
+if (nrow(shortlist) < 8) {
+  # FIX: 补充而非替换：将未入选的基因按 p.value 补进来
+  supplement <- cox_res %>%
+    filter(!gene %in% shortlist$gene) %>%
+    slice_head(n = max(0, 15 - nrow(shortlist)))
+  shortlist <- bind_rows(shortlist, supplement)
+}
+if (nrow(shortlist) > 25) {
+  shortlist <- shortlist %>% slice_head(n = 25)
+}
+
+fwrite(shortlist, file.path(out_dir, "12_prognostic_gene_shortlist.tsv"), sep = "\t")
+cat("Shortlist genes:", nrow(shortlist), "\n")
+print(shortlist[, c("gene", "HR", "CI_low", "CI_high", "p.value", "FDR",
+                    "n_samples", "n_events")])
+
+# ---------- 绘图：top genes forest plot ----------
+# FIX: 使用 scale_y_log10() 使 HR 轴对称且符合惯例
+#      用颜色区分 HR > 1 和 HR < 1
+#      用 tryCatch + on.exit 防止设备泄漏
+plot_n <- min(15, nrow(cox_res))
+plot_df <- cox_res %>%
+  slice_head(n = plot_n) %>%
+  mutate(
+    gene      = factor(gene, levels = rev(gene)),
+    direction = ifelse(HR >= 1, "Risk (HR≥1)", "Protective (HR<1)")
+  )
+
+# FIX: 确保 CI_low > 0（log scale 不接受 ≤ 0 的值）
+ci_floor <- 1e-4
+plot_df <- plot_df %>%
+  mutate(
+    CI_low  = pmax(CI_low,  ci_floor),
+    CI_high = pmax(CI_high, ci_floor)
+  )
+
+tryCatch({
+  pdf(file.path(out_dir, "12_univcox_forest_top.pdf"), width = 7, height = 5.5)
+  on.exit(dev.off(), add = TRUE)   # FIX: 无论是否出错都关闭设备
+  print(
+    ggplot(plot_df, aes(x = gene, y = HR, ymin = CI_low, ymax = CI_high,
+                        colour = direction)) +
+      geom_pointrange(size = 0.6) +
+      geom_hline(yintercept = 1, linetype = 2, colour = "grey40") +
+      scale_y_log10() +                          # FIX: HR 轴取 log10，视觉对称
+      scale_colour_manual(values = c("Risk (HR≥1)"       = "#d73027",
+                                     "Protective (HR<1)" = "#4575b4")) +
+      coord_flip() +
+      theme_bw(base_size = 12) +
+      theme(legend.title = element_blank()) +
+      labs(
+        x     = NULL,
+        y     = "Hazard ratio (log10 scale, univariable Cox)",
+        title = "Top candidate prognostic genes in MCD axis"
+      )
+  )
+}, error = function(e) {
+  warning("Forest plot failed: ", conditionMessage(e))
+})
+
+writeLines(capture.output(sessionInfo()),
+           file.path(out_dir, "12_sessionInfo.txt"))
+cat("\n12_prognostic_gene_screening.R finished successfully.\n")

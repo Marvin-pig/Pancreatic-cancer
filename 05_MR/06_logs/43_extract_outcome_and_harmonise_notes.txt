@@ -1,0 +1,23 @@
+=== Code 43 Summary ===
+Created at: 2026-03-20 12:27:25.51237
+
+[Goal]
+Extract BBJ outcome data for clumped primary instruments and harmonise exposure-outcome pairs.
+
+[Outcome settings]
+bbj_outcome_id = bbj-a-140
+proxies = TRUE
+proxy_rsq = 0.8
+harmonise_action = 2
+
+[Outputs]
+- 43_api_auth_check.tsv
+- 43_primary_exposure_for_harmonisation.tsv
+- 43_bbj_outcome_raw.tsv
+- 43_outcome_extraction_audit.tsv
+- 43_<GENE>_harmonised.tsv
+- 43_<GENE>_harmonised_mr_keep.tsv
+- 43_harmonised_all_genes.tsv
+- 43_harmonised_mr_keep_all_genes.tsv
+- 43_gene_analysis_tier.tsv
+- 43_status_summary.tsv

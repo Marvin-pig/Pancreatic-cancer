@@ -1,0 +1,4 @@
+accession	local_dataset_dir	file_name	file_type	file_role	file_exists	readable	contains_counts	contains_barcodes	contains_features	contains_metadata	contains_cell_annotation	note
+"GSE155698"	"06_scRNA/01_raw_data/GSE155698"	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
+"CRA001160"	"06_scRNA/01_raw_data/CRA001160"	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
+"GSE205013"	"06_scRNA/01_raw_data/GSE205013"	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA

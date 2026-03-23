@@ -1,0 +1,3 @@
+outcome_dataset	role	ancestry	priority	access_method	note
+PanScan_PanC4_European_pancreatic_cancer_GWAS	primary_outcome	European	HIGH	public summary statistics / curated GWAS source	main pancreatic cancer risk outcome for primary MR
+BBJ_pancreatic_cancer_bbj-a-140	ancestry_sensitivity_outcome	East_Asian	MEDIUM	OpenGWAS	do not use as primary result; use as sensitivity analysis

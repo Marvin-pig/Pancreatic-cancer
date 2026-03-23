@@ -1,0 +1,9 @@
+gene	source	pre_n	post_n	ok	message
+"CXCL10"	"relax"	1083	1	TRUE	""
+"GBP4"	"relax"	986	3	TRUE	""
+"GPX4"	"relax"	772	4	TRUE	""
+"IDO1"	"relax"	1222	3	TRUE	""
+"IL15RA"	"relax"	338	5	TRUE	""
+"SLC31A1"	"relax"	716	3	TRUE	""
+"TGFBI"	"relax"	1450	9	TRUE	""
+"TGFBR3"	"relax"	322	3	TRUE	""

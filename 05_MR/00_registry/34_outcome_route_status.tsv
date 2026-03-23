@@ -1,0 +1,5 @@
+item	value
+primary_outcome_local_ready	FALSE
+bbj_access_ready	FALSE
+any_outcome_route_ready	FALSE
+recommended_next_action	Still need at least one real outcome route; attach PanScan/PanC4 file or fix OpenGWAS JWT

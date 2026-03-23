@@ -1,0 +1,8 @@
+63 completed
+Created at: 2026-03-22 16:49:54.067129
+
+[Goal]
+Visualize MCD-related signals and 12-gene signature in malignant candidate pool.
+
+[Next step]
+Write the single-cell result paragraph and plan figure layout.

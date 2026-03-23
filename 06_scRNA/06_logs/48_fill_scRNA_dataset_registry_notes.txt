@@ -1,0 +1,13 @@
+48 completed
+Created at: 2026-03-22 10:42:34.781124
+
+[Goal]
+Fill candidate PDAC scRNA-seq datasets and fix main/validation cohort selection.
+
+[Selected datasets]
+Main dataset: GSE155698
+Validation dataset: CRA001160
+Supplementary extension dataset: GSE205013
+
+[Next step]
+Start 49: download preparation and dataset-level metadata audit before Seurat preprocessing.

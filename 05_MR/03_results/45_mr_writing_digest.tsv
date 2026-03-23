@@ -1,0 +1,9 @@
+gene	n_mr_keep	lead_method	lead_OR	lead_OR_lci95	lead_OR_uci95	lead_pval	ivw_p	wm_p	egger_p	ivw_heterogeneity_p	egger_intercept_p	evidence_class	writing_priority	next_action_priority
+"CXCL10"	1	"Wald_ratio"	0.711	0.178	2.848	0.63	NA	NA	NA	NA	NA	"single_snp_negative"	"supplementary_wald_ratio"	"do_not_overinterpret_need_more_iv_or_other_evidence"
+"GBP4"	2	"IVW"	1.661	0.802	3.436	0.172	0.172	NA	NA	NA	NA	"few_snp_exploratory_negative"	"supplementary_exploratory"	"consider_primary_outcome_replication_if_biologically_important"
+"GPX4"	3	"IVW"	0.92	0.736	1.149	0.461	0.461	0.446	0.729	0.897	0.862	"multi_snp_but_no_support"	"main_text_negative_or_neutral"	"prioritise_primary_outcome_replication"
+"IDO1"	2	"IVW"	1.049	0.573	1.92	0.878	0.878	NA	NA	NA	NA	"few_snp_exploratory_negative"	"supplementary_exploratory"	"consider_primary_outcome_replication_if_biologically_important"
+"IL15RA"	2	"IVW"	1.167	0.774	1.761	0.461	0.461	NA	NA	NA	NA	"few_snp_exploratory_negative"	"supplementary_exploratory"	"consider_primary_outcome_replication_if_biologically_important"
+"SLC31A1"	3	"IVW"	0.931	0.616	1.407	0.735	0.735	0.673	0.59	0.522	0.624	"multi_snp_but_no_support"	"main_text_negative_or_neutral"	"prioritise_primary_outcome_replication"
+"TGFBI"	2	"IVW"	0.861	0.63	1.177	0.349	0.349	NA	NA	NA	NA	"few_snp_exploratory_negative"	"supplementary_exploratory"	"consider_primary_outcome_replication_if_biologically_important"
+"TGFBR3"	2	"IVW"	0.495	0.15	1.629	0.247	0.247	NA	NA	NA	NA	"few_snp_exploratory_negative"	"supplementary_exploratory"	"consider_primary_outcome_replication_if_biologically_important"

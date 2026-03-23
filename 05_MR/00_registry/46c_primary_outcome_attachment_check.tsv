@@ -1,0 +1,9 @@
+column	present	n_valid
+"SNP"	TRUE	0
+"effect_allele"	TRUE	0
+"other_allele"	TRUE	0
+"beta"	TRUE	0
+"se"	TRUE	0
+"pval"	TRUE	0
+"eaf"	TRUE	0
+"outcome"	TRUE	0

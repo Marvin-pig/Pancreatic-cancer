@@ -1,0 +1,9 @@
+gene	source	pre_n	post_n	ok	message
+"CXCL10"	"strict"	944	1	TRUE	""
+"GBP4"	"strict"	672	2	TRUE	""
+"GPX4"	"strict"	679	3	TRUE	""
+"IDO1"	"strict"	921	2	TRUE	""
+"IL15RA"	"strict"	227	4	TRUE	""
+"SLC31A1"	"strict"	601	3	TRUE	""
+"TGFBI"	"strict"	952	6	TRUE	""
+"TGFBR3"	"strict"	230	2	TRUE	""

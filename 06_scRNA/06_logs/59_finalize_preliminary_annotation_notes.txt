@@ -1,0 +1,8 @@
+59 completed
+Created at: 2026-03-22 15:56:47.66621
+
+[Goal]
+Finalize preliminary annotation and define major compartments.
+
+[Next step]
+Split epithelial / myeloid / T_NK / B_plasma / fibroblast compartments and begin malignant-focused analysis.

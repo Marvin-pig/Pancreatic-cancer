@@ -1,0 +1,9 @@
+gene	raw_rows	eaf_joined_rows	reconstructable_rows	rows_after_basic_qc	complete_rows
+CXCL10	1142	0	0	1142	0
+GBP4	1058	0	0	1058	0
+GPX4	813	0	0	813	0
+IDO1	1299	0	0	1299	0
+IL15RA	376	0	0	376	0
+SLC31A1	750	0	0	750	0
+TGFBI	1531	0	0	1531	0
+TGFBR3	352	0	0	352	0

@@ -1,0 +1,11 @@
+gene	raw_file_exists	raw_n	eaf_joined_n	reconstructable_n	complete_n	written_official_exposure	official_exposure_file	reason
+CXCL10	TRUE	1142	0	0	0	FALSE	05_MR/01_raw_data/exposure/eQTLGen/CXCL10_cis_eqtl.tsv	no_complete_rows_after_fixed_af_source
+GBP4	TRUE	1058	0	0	0	FALSE	05_MR/01_raw_data/exposure/eQTLGen/GBP4_cis_eqtl.tsv	no_complete_rows_after_fixed_af_source
+GPX4	TRUE	813	0	0	0	FALSE	05_MR/01_raw_data/exposure/eQTLGen/GPX4_cis_eqtl.tsv	no_complete_rows_after_fixed_af_source
+IDO1	TRUE	1299	0	0	0	FALSE	05_MR/01_raw_data/exposure/eQTLGen/IDO1_cis_eqtl.tsv	no_complete_rows_after_fixed_af_source
+IL15RA	TRUE	376	0	0	0	FALSE	05_MR/01_raw_data/exposure/eQTLGen/IL15RA_cis_eqtl.tsv	no_complete_rows_after_fixed_af_source
+INHBA	FALSE		0	0	0	FALSE	05_MR/01_raw_data/exposure/eQTLGen/INHBA_cis_eqtl.tsv	raw_gene_table_missing
+MET	FALSE		0	0	0	FALSE	05_MR/01_raw_data/exposure/eQTLGen/MET_cis_eqtl.tsv	raw_gene_table_missing
+SLC31A1	TRUE	750	0	0	0	FALSE	05_MR/01_raw_data/exposure/eQTLGen/SLC31A1_cis_eqtl.tsv	no_complete_rows_after_fixed_af_source
+TGFBI	TRUE	1531	0	0	0	FALSE	05_MR/01_raw_data/exposure/eQTLGen/TGFBI_cis_eqtl.tsv	no_complete_rows_after_fixed_af_source
+TGFBR3	TRUE	352	0	0	0	FALSE	05_MR/01_raw_data/exposure/eQTLGen/TGFBR3_cis_eqtl.tsv	no_complete_rows_after_fixed_af_source

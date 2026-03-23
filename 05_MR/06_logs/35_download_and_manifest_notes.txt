@@ -1,0 +1,15 @@
+=== Code 35 Summary ===
+Created at: 2026-03-20 10:22:07.58773
+
+[What this script did]
+1. Attempted to download GTEx V8 Whole_Blood.zip
+2. Attempted to download GTEx V8 Pancreas.zip
+3. Generated batch1 eQTLGen manifest
+4. Created BBJ outcome SNP placeholder file
+
+[Important rule]
+Primary exposure remains eQTLGen (do not silently replace with GTEx).
+GTEx files are supporting resources only at this stage.
+
+[Next step]
+Download or prepare at least one batch1 eQTLGen gene-level cis-eQTL TSV, then proceed to 36

@@ -1,0 +1,23 @@
+=== Code 42b Summary ===
+Created at: 2026-03-20 11:52:45.09325
+
+[Goal]
+Re-run LD clumping with explicit OpenGWAS JWT authentication.
+
+[Parameters]
+pop = EUR
+clump_kb = 10000
+clump_r2 = 0.001
+min_primary_iv_n = 3
+
+[API auth check]
+status_code = 200
+ok = TRUE
+
+[Outputs]
+- 42b_api_auth_check.tsv
+- 42b_clumping_summary_strict.tsv
+- 42b_clumping_summary_relax.tsv
+- 42b_primary_instrument_choice.tsv
+- 42b_status_summary.tsv
+- 42b_bbj_outcome_snp_list_primary.tsv

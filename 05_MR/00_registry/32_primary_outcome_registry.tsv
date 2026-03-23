@@ -1,0 +1,7 @@
+item	value
+preferred_file_name	pancreatic_cancer_sumstats.tsv
+preferred_format	tab-delimited text
+build	GRCh37_or_liftable
+trait	pancreatic cancer risk
+ancestry	European
+role	primary_outcome

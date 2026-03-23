@@ -1,0 +1,2 @@
+SNP	effect_allele	other_allele	beta	se	pval	eaf	outcome	study_accession	trait	chr	pos
+"rs1046040"	"A"	"G"	-0.0100503358535014	0.0406927642829683	0.804923	NA	"PanScan_PanC4_GCST000679"	"GCST000679"	NA	19	1095515

@@ -1,0 +1,6 @@
+input_type	expected_source	status	note
+"training_expression_matrix"	"TCGA-PAAD normalized expression matrix"	"expected"	"used for drug sensitivity prediction"
+"training_clinical_table"	"TCGA-PAAD clinical survival table"	"expected"	"used for sample alignment if needed"
+"frozen_signature_definition"	"12-gene frozen signature"	"available"	"already frozen in project"
+"risk_group_assignment"	"training median cutoff based high/low risk grouping"	"available"	"already frozen in project"
+"deg_or_program_for_repositioning"	"high vs low risk DEGs or malignant program genes"	"expected"	"can be imported later from bulk/single-cell downstream results"

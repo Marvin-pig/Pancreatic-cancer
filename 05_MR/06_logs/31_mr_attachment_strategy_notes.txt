@@ -1,0 +1,25 @@
+=== MR Manual Data Attachment Strategy ===
+Created at: 2026-03-19 17:05:17.689057
+
+[Summary]
+  Total file slots:   21
+  Already present:    0
+  Still missing:      21
+  HIGH/TOP & missing: 11
+
+[Runnable Status]
+  Primary exposure ready : FALSE
+  Primary outcome ready  : FALSE
+  Minimum MR runnable    : FALSE
+
+[Rule]
+  Do NOT start main MR until minimum_MR_runnable becomes TRUE.
+
+[Priority Order for Manual Data Placement]
+  1. Place PanScan/PanC4 outcome GWAS summary file
+  2. Place eQTLGen files for HIGH-priority batch1 genes
+  3. Add GTEx pancreas support files later
+
+[Input Files]
+  expected_file    : 05_MR/02_processed_data/30_batch1_expected_input_files.tsv
+  manual_plan_file : 05_MR/00_registry/30_manual_data_acquisition_plan.tsv (found)

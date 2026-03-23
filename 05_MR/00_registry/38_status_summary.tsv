@@ -1,0 +1,6 @@
+item	value
+af_file_exists	FALSE
+n_genes_total	10
+n_genes_with_raw_table	8
+n_genes_written_official_exposure	0
+recommended_next_action	Check AF file schema / reconstruction assumptions before MR

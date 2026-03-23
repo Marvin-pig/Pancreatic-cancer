@@ -1,0 +1,9 @@
+item	value
+"disease_scope"	"Pancreatic ductal adenocarcinoma / pancreatic cancer"
+"species"	"Human"
+"preferred_sample_type"	"Primary tumor preferred"
+"raw_data_requirement"	"Raw count matrix or standard processed object required"
+"cell_compartment_requirement"	"Prefer malignant + immune + stromal compartments"
+"treatment_annotation_requirement"	"Untreated or clearly annotated treatment status"
+"communication_analysis_requirement"	"Should support cell-cell communication analysis"
+"signature_mapping_requirement"	"Must allow mapping of 12-gene signature and MCD-related genes"

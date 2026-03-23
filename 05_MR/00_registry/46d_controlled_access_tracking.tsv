@@ -1,0 +1,7 @@
+task_id	task	status	note
+46D_A	Confirm institutional route for dbGaP controlled-access request	TODO	May require PI/institutional data access approval
+46D_B	Track access request for phs000206.v5.p3 (PanScan)	TODO	PanScan controlled data
+46D_C	Track access request for phs000648.v1.p1 (PanC4)	TODO	PanC4 controlled data
+46D_D	Record whether full summary statistics or per-study result tables were obtained	TODO	Need summary-level GWAS result table usable for MR
+46D_E	Place obtained file into local intake path	TODO	Manual file placement required
+46D_F	Run schema normalization and structural validation	TODO	Use this script after file arrival

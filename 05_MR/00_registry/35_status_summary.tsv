@@ -1,0 +1,6 @@
+item	value
+GTEx_whole_blood_zip_ready	TRUE
+GTEx_pancreas_zip_ready	TRUE
+any_support_resource_ready	TRUE
+any_eqtlgen_primary_exposure_ready	FALSE
+recommended_next_action	Download or prepare at least one batch1 eQTLGen gene-level cis-eQTL TSV, then proceed to 36

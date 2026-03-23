@@ -1,0 +1,7 @@
+strategy_block	strategy_name	detail
+"A1"	"predicted_drug_sensitivity"	"Use transcriptome-based pharmacogenomic prediction on TCGA-PAAD samples"
+"A2"	"group_comparison"	"Compare predicted response between high-risk and low-risk groups"
+"A3"	"main_output"	"Generate ranked candidate drugs with effect direction and visualization"
+"B1"	"drug_repositioning"	"Use risk-associated genes/programs for candidate drug reversal matching"
+"B2"	"gene_program_source"	"Use bulk DEGs and optionally malignant-pool program genes"
+"B3"	"supplementary_output"	"Generate repositioning candidate table and biological interpretation notes"

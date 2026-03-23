@@ -1,0 +1,11 @@
+item	value
+"stage67_completed"	"TRUE"
+"sample_alignment_written"	"TRUE"
+"raw_prediction_written"	"TRUE"
+"match_registry_written"	"TRUE"
+"group_comparison_full_written"	"TRUE"
+"group_comparison_written"	"TRUE"
+"priority_table_written"	"TRUE"
+"boxplot_written"	"TRUE"
+"writing_digest_written"	"TRUE"
+"next_stage"	"68_drug_repositioning_and_biological_interpretation"

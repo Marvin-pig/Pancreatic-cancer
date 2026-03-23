@@ -1,0 +1,11 @@
+item	value
+"stage54_completed"	"TRUE"
+"main_dataset"	"GSE155698"
+"analysis_scope"	"PDAC_TISSUE_* only"
+"sample14_rescued"	"TRUE"
+"sample14_merge_status"	"merged_success"
+"final_seurat_object_written"	"TRUE"
+"final_import_plan_written"	"TRUE"
+"final_pre_qc_summary_written"	"TRUE"
+"n_tumor_tissue_samples_final"	"17"
+"next_stage"	"55_qc_metrics_and_filtering"

@@ -1,0 +1,5 @@
+id.exposure	id.outcome	outcome	exposure	method	Q	Q_df	Q_pval	gene
+"GPX4"	"bbj-a-140"	"Pancreatic cancer || id:bbj-a-140"	"eQTLGen_GPX4"	"Inverse variance weighted"	0.218309181873614	2	0.896591801817571	"GPX4"
+"GPX4"	"bbj-a-140"	"Pancreatic cancer || id:bbj-a-140"	"eQTLGen_GPX4"	"MR Egger"	0.169617164631757	1	0.68045226988881	"GPX4"
+"SLC31A1"	"bbj-a-140"	"Pancreatic cancer || id:bbj-a-140"	"eQTLGen_SLC31A1"	"Inverse variance weighted"	1.29992329732914	2	0.522065798297634	"SLC31A1"
+"SLC31A1"	"bbj-a-140"	"Pancreatic cancer || id:bbj-a-140"	"eQTLGen_SLC31A1"	"MR Egger"	0.849201430653288	1	0.35677834734153	"SLC31A1"

@@ -1,0 +1,7 @@
+item	value
+"stage58_completed"	"TRUE"
+"marker_panel_written"	"TRUE"
+"dotplot_written"	"TRUE"
+"cluster_marker_digest_written"	"TRUE"
+"preliminary_annotation_template_written"	"TRUE"
+"next_stage"	"59_finalize_preliminary_annotation_and_define_major_compartments"

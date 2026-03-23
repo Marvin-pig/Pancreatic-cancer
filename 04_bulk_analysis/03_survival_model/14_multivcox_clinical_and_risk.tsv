@@ -1,0 +1,6 @@
+term	estimate	std.error	statistic	p.value	conf.low	conf.high	model_formula	n_complete
+risk_score	3.90833610450548	0.185237585573999	7.35872112823106	1.85680473326625e-13	2.71842519006748	5.61909562992312	Surv(OS_time, OS_event) ~ risk_score + age + gender + stage_collapsed + grade_collapsed	163
+age	1.0196825865448	0.0108007834519122	1.80462734869653	0.0711330154781128	0.998323649282214	1.04149849405077	Surv(OS_time, OS_event) ~ risk_score + age + gender + stage_collapsed + grade_collapsed	163
+genderFemale	1.17492266722693	0.213464915911234	0.755170139392982	0.450146902918509	0.773228079115729	1.78529894509566	Surv(OS_time, OS_event) ~ risk_score + age + gender + stage_collapsed + grade_collapsed	163
+stage_collapsedIII-IV	0.873287004298387	0.593375521919199	-0.228339417132165	0.819382383396745	0.27294480790429	2.79408206271457	Surv(OS_time, OS_event) ~ risk_score + age + gender + stage_collapsed + grade_collapsed	163
+grade_collapsedG3-4	1.0456252544077	0.229606739269874	0.194310655722105	0.845932642588203	0.666706137566602	1.63990116642047	Surv(OS_time, OS_event) ~ risk_score + age + gender + stage_collapsed + grade_collapsed	163

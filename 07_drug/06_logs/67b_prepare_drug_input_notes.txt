@@ -1,0 +1,16 @@
+67b completed
+Created at: 2026-03-22 17:47:20.094918
+
+[Goal]
+Audit processed TCGA expression object and export drug-ready expression/risk inputs.
+
+[Key outputs]
+- 07_drug/02_processed_data/67b_tcga_paad_expr_for_drug.tsv
+- 07_drug/02_processed_data/67b_tcga_paad_risk_group_for_drug.tsv
+
+[Expression handling]
+Expression scale inference: counts_like
+Transform note: logCPM_from_counts_like_expression
+
+[Next step]
+Use these outputs in the final 67 predicted drug sensitivity script.

@@ -1,0 +1,7 @@
+item	value
+"stage56_completed"	"TRUE"
+"normalized_object_written"	"FALSE"
+"hvg_written"	"TRUE"
+"pca_embeddings_written"	"TRUE"
+"pca_summary_written"	"TRUE"
+"next_stage"	"57_neighbors_umap_preintegration_or_integration_decision"

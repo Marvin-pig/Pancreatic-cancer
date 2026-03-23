@@ -1,0 +1,25 @@
+46c completed
+Created at: 2026-03-20 17:38:00.017249
+
+[Goal]
+Search for a scientifically closer pancreatic cancer primary outcome source
+with stricter GWAS Catalog filtering via the official REST API.
+
+[API used]
+Base: https://www.ebi.ac.uk/gwas/rest/api
+
+[Key outputs]
+- 46c_gwas_catalog_traits_all.tsv
+- 46c_gwas_catalog_pancreatic_traits_strict.tsv
+- 46c_pancreatic_trait_studies_annotated.tsv
+- 46c_study_overlap_audit.tsv
+- 46c_selected_primary_outcome_candidate.tsv
+- 46c_selected_primary_outcome_overlap.tsv
+- 46c_primary_outcome_attachment_check.tsv
+- 46c_status_summary.tsv
+- 46c_association_cache_raw.tsv
+
+[Result]
+Candidate acceptable: FALSE
+Selected study: GCST005434
+Usable outcome rows: 0

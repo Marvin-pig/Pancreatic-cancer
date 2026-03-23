@@ -1,0 +1,4 @@
+contrast	n_universe_genes	n_up_genes	n_down_genes	n_go_up	n_go_down	n_kegg_up	n_kegg_down	n_hallmark_gsea
+high_vs_low	23128	588	709	114	0	26	0	50
+high_vs_intermediate	23128	1107	808	470	0	26	2	50
+intermediate_vs_low	23128	616	556	38	178	5	23	50

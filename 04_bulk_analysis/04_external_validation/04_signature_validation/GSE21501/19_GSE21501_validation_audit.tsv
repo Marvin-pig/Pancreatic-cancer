@@ -1,0 +1,9 @@
+metric	value
+n_signature_genes_total	12
+n_signature_genes_found	12
+n_signature_genes_missing	0
+n_matched_samples	102
+train_cutoff	-0.038750945848954
+n_high_risk	98
+n_low_risk	4
+n_events_total	66

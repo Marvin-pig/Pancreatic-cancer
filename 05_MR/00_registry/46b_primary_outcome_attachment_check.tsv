@@ -1,0 +1,9 @@
+column	present
+"SNP"	TRUE
+"effect_allele"	TRUE
+"other_allele"	TRUE
+"beta"	TRUE
+"se"	TRUE
+"pval"	TRUE
+"eaf"	TRUE
+"outcome"	TRUE

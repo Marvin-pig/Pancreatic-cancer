@@ -1,0 +1,6 @@
+cluster_id	proposed_direction	confidence	final_action
+"10"	"immune_contamination"	"high"	"exclude_from_malignant_pool"
+"17"	"epithelial_like_candidate"	"high"	"absorb_into_epithelial"
+"21"	"immune_contamination"	"high"	"exclude_from_malignant_pool"
+"24"	"acinar_like_candidate"	"high"	"absorb_into_acinar"
+"26"	"epithelial_like_candidate"	"high"	"absorb_into_epithelial"

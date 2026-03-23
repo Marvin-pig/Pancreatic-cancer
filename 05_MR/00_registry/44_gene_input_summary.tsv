@@ -1,0 +1,9 @@
+gene	n_mr_keep	exposure	outcome	outcome_id	reporting_tier
+"CXCL10"	1	"eQTLGen_CXCL10"	"Pancreatic cancer || id:bbj-a-140"	"bbj-a-140"	"supplementary_wald_ratio_only"
+"GBP4"	2	"eQTLGen_GBP4"	"Pancreatic cancer || id:bbj-a-140"	"bbj-a-140"	"supplementary_exploratory"
+"GPX4"	3	"eQTLGen_GPX4"	"Pancreatic cancer || id:bbj-a-140"	"bbj-a-140"	"main_text_candidate"
+"IDO1"	2	"eQTLGen_IDO1"	"Pancreatic cancer || id:bbj-a-140"	"bbj-a-140"	"supplementary_exploratory"
+"IL15RA"	2	"eQTLGen_IL15RA"	"Pancreatic cancer || id:bbj-a-140"	"bbj-a-140"	"supplementary_exploratory"
+"SLC31A1"	3	"eQTLGen_SLC31A1"	"Pancreatic cancer || id:bbj-a-140"	"bbj-a-140"	"main_text_candidate"
+"TGFBI"	2	"eQTLGen_TGFBI"	"Pancreatic cancer || id:bbj-a-140"	"bbj-a-140"	"supplementary_exploratory"
+"TGFBR3"	2	"eQTLGen_TGFBR3"	"Pancreatic cancer || id:bbj-a-140"	"bbj-a-140"	"supplementary_exploratory"

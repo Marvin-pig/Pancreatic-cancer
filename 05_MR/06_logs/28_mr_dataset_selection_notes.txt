@@ -1,0 +1,17 @@
+MR dataset selection notes
+Created at: 2026-03-19 16:17:53.974704
+
+[Primary exposure]
+eQTLGen whole blood cis-eQTL
+
+[Supporting exposure]
+GTEx v8 pancreas cis-eQTL
+
+[Primary outcome]
+PanScan/PanC4 European pancreatic cancer GWAS
+
+[Sensitivity outcome]
+BBJ pancreatic cancer (bbj-a-140)
+
+[Execution principle]
+Run batch1_priority genes first, then expand if signal quality is acceptable.

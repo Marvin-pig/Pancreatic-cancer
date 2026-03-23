@@ -1,0 +1,7 @@
+item	value
+"stage59_completed"	"TRUE"
+"annotation_written"	"TRUE"
+"cluster_compartment_summary_written"	"TRUE"
+"major_compartment_summary_written"	"TRUE"
+"annotated_object_written"	"TRUE"
+"next_stage"	"60_split_major_compartments_and_start_malignant_focus"

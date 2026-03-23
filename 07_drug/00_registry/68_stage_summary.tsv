@@ -1,0 +1,8 @@
+item	value
+"stage68_completed"	"TRUE"
+"drug_direction_summary_written"	"TRUE"
+"drug_biological_interpretation_written"	"TRUE"
+"bulk_singlecell_drug_bridge_written"	"TRUE"
+"repositioning_strategy_written"	"TRUE"
+"writing_digest_written"	"TRUE"
+"next_stage"	"69_prepare_drug_result_paragraph_and_figure_layout"

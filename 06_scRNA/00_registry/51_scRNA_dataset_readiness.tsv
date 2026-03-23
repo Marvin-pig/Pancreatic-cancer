@@ -1,0 +1,4 @@
+accession	n_files	has_likely_matrix	has_likely_barcodes	has_likely_features	has_likely_metadata	has_likely_seurat_object	preliminary_ready_for_import
+"CRA001160"	1	"NO"	"NO"	"NO"	"YES"	"NO"	"NO"
+"GSE155698"	41	"NO"	"NO"	"NO"	"NO"	"NO"	"NO"
+"GSE205013"	81	"YES"	"YES"	"YES"	"YES"	"NO"	"YES"

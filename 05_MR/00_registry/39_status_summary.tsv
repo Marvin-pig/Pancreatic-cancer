@@ -1,0 +1,6 @@
+item	value
+af_file_exists	TRUE
+n_genes_total	10
+n_genes_with_raw_table	8
+n_genes_written_official_exposure	0
+recommended_next_action	If still zero, inspect 39_af_schema_map.tsv and manually verify AF allele columns

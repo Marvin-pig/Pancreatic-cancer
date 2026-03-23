@@ -1,0 +1,12 @@
+61 completed
+Created at: 2026-03-22 16:27:13.908286
+
+[Goal]
+Refine epithelial/malignant compartment and re-check epithelial-adjacent unresolved clusters.
+
+[Important debug files]
+61_priority_cluster_presence_check.tsv
+61_priority_unresolved_marker_error_log.tsv
+
+[Next step]
+Finalize malignant candidate definition and exclude obvious non-epithelial contaminants.

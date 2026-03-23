@@ -1,0 +1,8 @@
+item	status	note
+batch1_gene_plan_ready	DONE	29_batch1_priority_genes.tsv generated
+access_config_ready	DONE	29_mr_access_config.tsv generated
+eqtlgen_data_ready	TODO	Need local eQTLGen cis-eQTL file
+gtex_pancreas_data_ready	TODO	Need local GTEx v8 pancreas file
+panscan_panc4_outcome_ready	TODO	Need local PanScan/PanC4 summary statistics
+bbj_outcome_ready	TODO	Can use OpenGWAS bbj-a-140 if access is available
+jwt_ready_if_needed	TODO	Only needed for OpenGWAS API-based access

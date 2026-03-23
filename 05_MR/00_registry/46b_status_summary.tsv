@@ -1,0 +1,9 @@
+item	value
+"n_primary_snps_query"	"23"
+"n_pancreatic_traits_found"	"400"
+"n_studies_tested"	"20"
+"selected_study_accession"	"GCST000679"
+"selected_study_pubmed_id"	NA
+"selected_study_keyword_score"	"0"
+"selected_outcome_rows"	"1"
+"recommended_next_action"	"Proceed to 47 using 46b_pancreatic_cancer_sumstats_for_primary_snps.tsv"

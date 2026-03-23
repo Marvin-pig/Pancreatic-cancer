@@ -1,0 +1,6 @@
+item	value
+"stage66_completed"	"TRUE"
+"module_plan_written"	"TRUE"
+"input_registry_written"	"TRUE"
+"strategy_written"	"TRUE"
+"next_stage"	"67_run_predicted_drug_sensitivity_analysis"

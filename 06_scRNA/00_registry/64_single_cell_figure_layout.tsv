@@ -1,0 +1,7 @@
+panel	content	interpretation
+"A"	"UMAP of major compartments"	"Define global cellular ecosystem"
+"B"	"UMAP of refined subtypes / malignant candidate definition"	"Show epithelial-focused malignant refinement"
+"C"	"DotPlot of canonical markers"	"Support lineage annotation"
+"D"	"FeaturePlot of signature12_module1"	"Show bulk-derived prognostic signature localization"
+"E"	"FeaturePlot of mcd_focus_module1"	"Show MCD-related transcriptional program localization"
+"F"	"FeaturePlot of key genes (MET/TGFBI/IDO1/INHBA/IL15RA/GBP4/SLC25A11/SNAPC4)"	"Show representative gene-level heterogeneity within malignant pool"

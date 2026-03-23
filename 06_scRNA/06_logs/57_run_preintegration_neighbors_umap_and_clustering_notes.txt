@@ -1,0 +1,13 @@
+57 completed
+Created at: 2026-03-22 15:35:26.179529
+
+[Goal]
+Run pre-integration clustering and UMAP to judge whether Harmony is necessary.
+
+[Important fixes in this script]
+1. ScaleData uses HVGs only to avoid memory explosion.
+2. JoinLayers() is applied before FindAllMarkers().
+3. Marker extraction is made robust to empty outputs and Seurat version differences.
+
+[Next step]
+Inspect cluster/sample dominance and marker coherence before deciding Harmony.

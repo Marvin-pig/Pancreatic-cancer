@@ -1,0 +1,9 @@
+item	value
+"stage62_completed"	"TRUE"
+"malignant_pool_written"	"TRUE"
+"acinar_pool_written"	"TRUE"
+"excluded_pool_written"	"TRUE"
+"review_pool_written"	"TRUE"
+"score_registry_written"	"TRUE"
+"malignant_score_summary_written"	"TRUE"
+"next_stage"	"63_visualize_MCD_and_signature_in_malignant_pool"

@@ -1,0 +1,7 @@
+metric	value
+n_external_samples	102
+n_external_events	66
+training_cutoff	-0.038750945848954
+external_median_cutoff	1.00294210847439
+continuous_HR	1.30493611686625
+continuous_p	0.2346124937708

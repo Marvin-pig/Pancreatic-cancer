@@ -1,0 +1,11 @@
+metric	value
+n_cohort_raw	168
+n_subtype_raw	177
+n_expr_samples_raw	168
+n_merged_before_filter	168
+missing_OS_time	0
+missing_OS_event	0
+nonpositive_OS_time	0
+invalid_OS_event	0
+duplicated_sample_id	0
+n_subtype_missing	0

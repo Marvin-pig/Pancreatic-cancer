@@ -1,0 +1,11 @@
+gene	n_rows	out_file
+CXCL10	1142	05_MR/02_processed_data/37_candidate_gene_tables/CXCL10_eqtlgen_raw.tsv
+GBP4	1058	05_MR/02_processed_data/37_candidate_gene_tables/GBP4_eqtlgen_raw.tsv
+GPX4	813	05_MR/02_processed_data/37_candidate_gene_tables/GPX4_eqtlgen_raw.tsv
+IDO1	1299	05_MR/02_processed_data/37_candidate_gene_tables/IDO1_eqtlgen_raw.tsv
+IL15RA	376	05_MR/02_processed_data/37_candidate_gene_tables/IL15RA_eqtlgen_raw.tsv
+INHBA	0	
+MET	0	
+SLC31A1	750	05_MR/02_processed_data/37_candidate_gene_tables/SLC31A1_eqtlgen_raw.tsv
+TGFBI	1531	05_MR/02_processed_data/37_candidate_gene_tables/TGFBI_eqtlgen_raw.tsv
+TGFBR3	352	05_MR/02_processed_data/37_candidate_gene_tables/TGFBR3_eqtlgen_raw.tsv

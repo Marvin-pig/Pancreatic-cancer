@@ -1,0 +1,16 @@
+46d true primary outcome pursuit notes
+Created at: 2026-03-21 16:20:19.999068
+
+[True target source]
+PanScan = phs000206.v5.p3
+PanC4   = phs000648.v1.p1
+Publication PMID = 29422604
+
+[Preferred local target]
+05_MR/01_raw_data/outcome/PanScan_PanC4/pancreatic_cancer_sumstats.tsv
+
+[Required columns]
+SNP, effect_allele, other_allele, beta, se, pval, eaf, outcome
+
+[Rule]
+Do not proceed to 47 unless the true outcome file is structurally valid and written to target path.

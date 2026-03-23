@@ -1,0 +1,10 @@
+53 completed
+Created at: 2026-03-22 13:00:51.629581
+
+[Key point]
+GSE155698 outer archive contains nested GSM-level tar.gz files.
+Need second-level unpack before Seurat import.
+
+[Current recommendation]
+Use PDAC_TISSUE_* as main scRNA analysis scope.
+Do not mix PBMC into tumor tissue main analysis.

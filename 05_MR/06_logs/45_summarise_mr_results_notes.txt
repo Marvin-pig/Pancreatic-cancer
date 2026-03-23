@@ -1,0 +1,13 @@
+=== Code 45 Summary ===
+Created at: 2026-03-20 14:07:51.615425
+
+[Goal]
+Summarise MR results into manuscript-oriented evidence tiers and reporting priorities.
+
+[Outputs]
+- 45_mr_summary_master_table.tsv
+- 45_mr_writing_digest.tsv
+- 45_mr_main_text_candidates.tsv
+- 45_mr_supplementary_candidates.tsv
+- 45_mr_interpretation_sentences.tsv
+- 45_status_summary.tsv

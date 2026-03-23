@@ -1,0 +1,12 @@
+Primary outcome attachment plan
+Created at: 2026-03-19 17:09:31.1221
+
+[Current status]
+Outcome file exists: FALSE
+
+[Next action for user]
+Place PanScan/PanC4 pancreatic cancer GWAS summary statistics file at:
+05_MR/01_raw_data/outcome/PanScan_PanC4/pancreatic_cancer_sumstats.tsv
+
+[Then run]
+05_MR/02_processed_data/32_check_primary_outcome_file.R

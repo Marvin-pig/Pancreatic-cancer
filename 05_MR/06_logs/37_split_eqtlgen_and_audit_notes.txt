@@ -1,0 +1,30 @@
+=== Code 37 Summary ===
+Created at: 2026-03-20 10:55:32.181492
+
+[Input files]
+batch1_file: 05_MR/02_processed_data/batch1_queries/29_batch1_priority_genes.tsv
+sig_file   : 05_MR/01_raw_data/exposure/eQTLGen/36_eqtlgen_significant_cis_eqtls.txt.gz
+
+[Detected columns]
+GeneSymbol     : GeneSymbol
+Gene ID        : Gene
+SNP            : SNP
+chr            : SNPChr
+pos            : SNPPos
+effect_allele  : AssessedAllele
+other_allele   : OtherAllele
+pval           : Pvalue
+zscore         : Zscore
+samplesize     : NrSamples
+
+[Hit summary]
+Batch1 genes total     : 10
+Genes found in full tbl: 8
+Genes not found        : 2
+
+[Rule]
+Do NOT overwrite 01_raw_data/exposure/eQTLGen/<GENE>_cis_eqtl.tsv yet.
+Current outputs are raw candidate tables and previews only.
+
+[Next step]
+Use code 38 to decide whether beta/se can be reconstructed and whether EAF can be joined.

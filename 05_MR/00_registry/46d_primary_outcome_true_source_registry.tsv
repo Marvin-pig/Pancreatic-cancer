@@ -1,0 +1,11 @@
+item	value
+target_publication	Genome-wide meta-analysis identifies five new susceptibility loci for pancreatic cancer
+pubmed_id	29422604
+doi	10.1038/s41467-018-02942-5
+target_trait	pancreatic cancer risk
+target_ancestry	European
+preferred_local_file	05_MR/01_raw_data/outcome/PanScan_PanC4/pancreatic_cancer_sumstats.tsv
+dbgap_panscan_accession	phs000206.v5.p3
+dbgap_panc4_accession	phs000648.v1.p1
+preferred_route	controlled_access_dbGaP
+fallback_route	BBJ_bbj-a-140

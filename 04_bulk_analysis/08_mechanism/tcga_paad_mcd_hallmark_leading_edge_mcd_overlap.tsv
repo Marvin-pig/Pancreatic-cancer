@@ -1,0 +1,5 @@
+gene_symbol_std	n_pathway_hit	n_contrast_hit	pathways	contrasts	death_types	tiers	gene_symbols
+ABI1	1	1	HALLMARK_INFLAMMATORY_RESPONSE	high_vs_low	disulfidptosis	main	ABI1
+FLNA	1	2	HALLMARK_EPITHELIAL_MESENCHYMAL_TRANSITION	high_vs_intermediate; high_vs_low	disulfidptosis	extended	FLNA
+GPX4	2	2	HALLMARK_OXIDATIVE_PHOSPHORYLATION; HALLMARK_DNA_REPAIR	high_vs_intermediate; high_vs_low	ferroptosis	main	GPX4
+SLC31A1	1	2	HALLMARK_INFLAMMATORY_RESPONSE	high_vs_low; high_vs_intermediate	cuproptosis	extended	SLC31A1

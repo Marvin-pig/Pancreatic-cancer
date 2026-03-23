@@ -1,0 +1,8 @@
+56 completed
+Created at: 2026-03-22 15:07:48.380917
+
+[Goal]
+Normalize post-QC tumor tissue object, compute HVGs, run PCA, and inspect sample-driven structure.
+
+[Next step]
+Decide whether to proceed with standard Seurat clustering or apply batch integration.

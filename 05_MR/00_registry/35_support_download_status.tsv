@@ -1,0 +1,3 @@
+dataset	url	dest	downloaded	size_bytes
+GTEx_V8_Whole_Blood	https://yanglab.westlake.edu.cn/data/SMR/GTEx_V8_cis_eqtl_summary/Whole_Blood.zip	05_MR/01_raw_data/exposure/GTEx_whole_blood/Whole_Blood.zip	TRUE	1000935465
+GTEx_V8_Pancreas	https://yanglab.westlake.edu.cn/data/SMR/GTEx_V8_cis_eqtl_summary/Pancreas.zip	05_MR/01_raw_data/exposure/GTEx_pancreas/Pancreas.zip	TRUE	998042980

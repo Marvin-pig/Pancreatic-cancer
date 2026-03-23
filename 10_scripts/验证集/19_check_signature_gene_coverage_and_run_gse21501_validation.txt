@@ -1,0 +1,260 @@
+# =========================
+# 19_check_signature_gene_coverage_and_run_gse21501_validation.R
+# 目的：
+# 1. 检查 12 个 signature genes 在 GSE21501 中的覆盖率
+# 2. 使用冻结系数计算 GSE21501 risk score
+# 3. 使用训练集 median cutoff 分组
+# 4. 进行外部 KM 与单因素 Cox
+# 5. 输出验证审计文件
+#
+# 修正要点：
+# - z-score 必须使用训练集的 mean/SD（来自 train_norm_params 文件），
+#   避免外部集自身标准化造成量纲漂移，导致固定阈值失效
+# - storage.mode() 替代 mode() 用于矩阵类型转换
+# - 矩阵乘法前显式对齐基因顺序
+# - 样本对齐后用 identical() 给出清晰错误信息
+# =========================
+
+suppressPackageStartupMessages({
+  library(data.table)
+  library(dplyr)
+  library(survival)
+  library(survminer)
+  library(broom)
+})
+
+# ---------- 路径 ----------
+expr_file       <- "04_bulk_analysis/04_external_validation/02_processed_data/GSE21501/18_GSE21501_expression_gene_level.tsv"
+cli_file        <- "04_bulk_analysis/04_external_validation/02_processed_data/GSE21501/18_GSE21501_clinical_survival_ready.tsv"
+coef_file       <- "04_bulk_analysis/03_survival_model/15_final_signature_coefficients.tsv"
+train_risk_file <- "04_bulk_analysis/03_survival_model/13_risk_score_training.tsv"
+
+# 训练集标准化参数（每个基因的 mean 和 sd，由训练脚本保存）
+# 文件必须含列：gene, mean_expr, sd_expr
+train_norm_file <- "04_bulk_analysis/03_survival_model/15_train_gene_norm_params.tsv"
+
+out_dir <- "04_bulk_analysis/04_external_validation/04_signature_validation/GSE21501"
+dir.create(out_dir, recursive = TRUE, showWarnings = FALSE)
+
+# ---------- 读取 ----------
+expr_df     <- fread(expr_file)
+cli_df      <- fread(cli_file)
+coef_df     <- fread(coef_file)
+train_risk  <- fread(train_risk_file)
+
+stopifnot("gene" %in% colnames(expr_df))
+stopifnot(all(c("sample_id", "OS_time", "OS_event") %in% colnames(cli_df)))
+stopifnot(all(c("gene", "coefficient") %in% colnames(coef_df)))
+stopifnot("risk_score" %in% colnames(train_risk))
+
+# ---------- 训练集标准化参数 ----------
+# 正确做法：用训练集 mean/SD 标准化外部集，保持量纲与训练集一致
+if (!file.exists(train_norm_file)) {
+  stop(
+    "训练集标准化参数文件不存在：", train_norm_file, "\n",
+    "请在训练脚本中保存每个 signature gene 的 mean_expr 和 sd_expr，",
+    "否则外部集 z-score 将使用自身统计量，导致 risk score 量纲漂移，固定阈值失效。"
+  )
+}
+norm_params <- fread(train_norm_file)
+stopifnot(all(c("gene", "mean_expr", "sd_expr") %in% colnames(norm_params)))
+
+# ---------- 表达矩阵 ----------
+expr_mat <- as.data.frame(expr_df, check.names = FALSE, stringsAsFactors = FALSE)
+rownames(expr_mat) <- expr_mat$gene
+expr_mat$gene      <- NULL
+expr_mat           <- as.matrix(expr_mat)
+storage.mode(expr_mat) <- "numeric"   # 修正：matrix 类型转换用 storage.mode()
+
+# ---------- signature gene coverage ----------
+sig_genes     <- coef_df$gene
+genes_found   <- intersect(sig_genes, rownames(expr_mat))
+genes_missing <- setdiff(sig_genes, rownames(expr_mat))
+
+coverage_df <- data.frame(
+  gene             = sig_genes,
+  found_in_GSE21501 = sig_genes %in% genes_found,
+  stringsAsFactors = FALSE
+)
+fwrite(
+  coverage_df,
+  file.path(out_dir, "19_GSE21501_signature_gene_coverage.tsv"),
+  sep = "\t"
+)
+
+cat("Signature genes total :", length(sig_genes), "\n")
+cat("Genes found           :", length(genes_found), "\n")
+cat("Genes missing         :", length(genes_missing), "\n")
+if (length(genes_missing) > 0) cat("Missing genes:", paste(genes_missing, collapse = ", "), "\n")
+print(coverage_df)
+
+if (length(genes_found) < 8) {
+  stop("Too few signature genes found in GSE21501 (found ", length(genes_found), ").")
+}
+
+# ---------- 样本对齐 ----------
+common_samples <- intersect(colnames(expr_mat), cli_df$sample_id)
+cat("Matched expression-clinical samples:", length(common_samples), "\n")
+
+if (length(common_samples) < 30) {
+  stop(
+    "Too few matched samples between GSE21501 expression and clinical tables (",
+    length(common_samples), ")."
+  )
+}
+
+expr_mat <- expr_mat[, common_samples, drop = FALSE]
+cli_df   <- cli_df %>%
+  filter(sample_id %in% common_samples) %>%
+  arrange(match(sample_id, common_samples))
+
+# 严格验证对齐，给出可调试的错误信息
+if (!identical(colnames(expr_mat), cli_df$sample_id)) {
+  mismatch <- which(colnames(expr_mat) != cli_df$sample_id)
+  stop(
+    "样本对齐失败，首个不匹配位置：", mismatch[1],
+    " (expr=", colnames(expr_mat)[mismatch[1]],
+    ", cli=", cli_df$sample_id[mismatch[1]], ")"
+  )
+}
+
+# ---------- 提取 signature 表达 ----------
+expr_sub <- expr_mat[genes_found, , drop = FALSE]   # gene x sample
+
+# ---------- 用训练集参数做 z-score ----------
+# 关键修正：外部集标准化必须使用训练集统计量，而非外部集自身
+norm_use <- norm_params %>%
+  filter(gene %in% genes_found) %>%
+  arrange(match(gene, genes_found))   # 与 expr_sub 行顺序对齐
+
+# 验证 norm_params 覆盖所有 found genes
+genes_no_norm <- setdiff(genes_found, norm_use$gene)
+if (length(genes_no_norm) > 0) {
+  warning(
+    "以下基因在训练集标准化参数文件中未找到，将用 sd=1, mean=0（即不标准化）：\n",
+    paste(genes_no_norm, collapse = ", ")
+  )
+  # 补全缺失基因的 norm 参数（不标准化，保持原值）
+  extra <- data.frame(
+    gene      = genes_no_norm,
+    mean_expr = 0,
+    sd_expr   = 1,
+    stringsAsFactors = FALSE
+  )
+  norm_use <- bind_rows(norm_use, extra) %>%
+    arrange(match(gene, genes_found))
+}
+
+# 逐行（基因）应用训练集 mean/SD
+expr_sub_z <- sweep(expr_sub, 1, norm_use$mean_expr, "-")   # 减均值
+expr_sub_z <- sweep(expr_sub_z, 1, ifelse(norm_use$sd_expr == 0 | is.na(norm_use$sd_expr), 1, norm_use$sd_expr), "/")
+# 结果：gene x sample，转置为 sample x gene
+expr_sub_z <- t(expr_sub_z)   # sample x gene
+
+# ---------- 风险评分 ----------
+# 修正：显式按 coef_use$gene 对齐列顺序，确保矩阵乘法正确
+coef_use <- coef_df %>%
+  filter(gene %in% genes_found)
+
+# 确保 expr_sub_z 含有所有 coef_use$gene（应由上面步骤保证）
+stopifnot(all(coef_use$gene %in% colnames(expr_sub_z)))
+
+# 显式对齐：先按 gene 名选列，再提取系数（顺序一致）
+expr_for_score <- expr_sub_z[, coef_use$gene, drop = FALSE]   # sample x gene（已对齐）
+coef_vec       <- coef_use$coefficient                         # 与列顺序一致，无需命名索引
+
+risk_score <- as.numeric(expr_for_score %*% coef_vec)
+
+# ---------- 固定 cutoff（训练集 median）----------
+train_cutoff <- median(train_risk$risk_score, na.rm = TRUE)
+
+risk_ext <- cli_df %>%
+  mutate(
+    risk_score = risk_score,
+    risk_group = ifelse(risk_score >= train_cutoff, "High", "Low")
+  )
+risk_ext$risk_group <- factor(risk_ext$risk_group, levels = c("Low", "High"))
+
+fwrite(
+  risk_ext,
+  file.path(out_dir, "19_GSE21501_external_risk_score.tsv"),
+  sep = "\t"
+)
+
+# ---------- 外部验证审计 ----------
+audit_df <- data.frame(
+  metric = c(
+    "n_signature_genes_total",
+    "n_signature_genes_found",
+    "n_signature_genes_missing",
+    "n_matched_samples",
+    "train_cutoff",
+    "n_high_risk",
+    "n_low_risk",
+    "n_events_total"
+  ),
+  value = c(
+    length(sig_genes),
+    length(genes_found),
+    length(genes_missing),
+    nrow(risk_ext),
+    train_cutoff,
+    sum(risk_ext$risk_group == "High"),
+    sum(risk_ext$risk_group == "Low"),
+    sum(risk_ext$OS_event, na.rm = TRUE)
+  ),
+  stringsAsFactors = FALSE
+)
+fwrite(
+  audit_df,
+  file.path(out_dir, "19_GSE21501_validation_audit.tsv"),
+  sep = "\t"
+)
+
+# ---------- KM ----------
+fit_km <- survfit(Surv(OS_time, OS_event) ~ risk_group, data = risk_ext)
+
+# 修正：ggsurvplot 返回列表，需要用 print() 正确渲染到 pdf 设备
+pdf(file.path(out_dir, "19_GSE21501_km_risk_group.pdf"), width = 7.2, height = 6.2)
+p <- ggsurvplot(
+  fit_km,
+  data            = risk_ext,
+  pval            = TRUE,
+  risk.table      = TRUE,
+  conf.int        = FALSE,
+  xlab            = "Overall survival time (GSE21501 original unit)",
+  ylab            = "Overall survival probability",
+  legend.title    = "Risk group",
+  legend.labs     = c("Low", "High"),
+  risk.table.height = 0.25,
+  ggtheme         = theme_bw(base_size = 12)
+)
+print(p)
+dev.off()
+
+# ---------- 单因素 Cox：连续 risk_score ----------
+cox_score     <- coxph(Surv(OS_time, OS_event) ~ risk_score, data = risk_ext)
+cox_score_res <- broom::tidy(cox_score, exponentiate = TRUE, conf.int = TRUE)
+fwrite(
+  cox_score_res,
+  file.path(out_dir, "19_GSE21501_univcox_risk_score.tsv"),
+  sep = "\t"
+)
+print(cox_score_res)
+
+# ---------- 单因素 Cox：二分类 risk_group ----------
+cox_group     <- coxph(Surv(OS_time, OS_event) ~ risk_group, data = risk_ext)
+cox_group_res <- broom::tidy(cox_group, exponentiate = TRUE, conf.int = TRUE)
+fwrite(
+  cox_group_res,
+  file.path(out_dir, "19_GSE21501_univcox_risk_group.tsv"),
+  sep = "\t"
+)
+print(cox_group_res)
+
+writeLines(
+  capture.output(sessionInfo()),
+  file.path(out_dir, "19_sessionInfo.txt")
+)
+
+cat("\n19_check_signature_gene_coverage_and_run_gse21501_validation.R finished successfully.\n")

@@ -1,0 +1,23 @@
+=== Code 38 Summary ===
+Created at: 2026-03-20 11:06:04.408887
+
+[Goal]
+Reconstruct approximate beta / se using zscore + samplesize + eaf.
+
+[Important warning]
+This is approximate reconstruction, not official original beta/se.
+Use for project progression and method testing; document clearly in Methods if retained.
+
+[Output tables]
+- 38_af_download_status.tsv
+- 38_af_schema_map.tsv
+- 38_gene_reconstruction_audit.tsv
+- 38_gene_row_qc_summary.tsv
+- 38_status_summary.tsv
+
+[Per-gene intermediate files]
+- 02_processed_data/37_candidate_gene_tables/<GENE>_with_reconstructed_fields.tsv
+- 02_processed_data/37_candidate_gene_tables/<GENE>_candidate_exposure_all_rows.tsv
+
+[Official exposure output path if successful]
+- 01_raw_data/exposure/eQTLGen/<GENE>_cis_eqtl.tsv

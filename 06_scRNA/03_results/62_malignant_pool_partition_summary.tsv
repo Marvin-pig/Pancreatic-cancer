@@ -1,0 +1,6 @@
+malignant_pool_label	n_cells	pct
+"acinar_like_pool"	504	0.012142530175633
+"excluded_contamination"	2198	0.0529549232659551
+"malignant_candidate"	3937	0.0948514708362445
+"other"	25890	0.623750210807816
+"residual_review_pool"	8978	0.216300864914352

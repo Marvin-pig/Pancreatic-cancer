@@ -1,0 +1,11 @@
+item	value
+"n_primary_snps_query"	"23"
+"n_strict_pancreatic_traits_found"	"31"
+"n_candidate_studies_tested"	"30"
+"selected_study_accession"	"GCST005434"
+"selected_study_pubmed_id"	"29422604"
+"selected_study_score_total"	"19"
+"selected_study_metadata_complete"	"TRUE"
+"selected_outcome_rows"	"0"
+"candidate_is_acceptable_for_47"	"FALSE"
+"recommended_next_action"	"Do NOT proceed to 47 yet; current public candidate is not close enough to PanScan/PanC4 primary outcome"

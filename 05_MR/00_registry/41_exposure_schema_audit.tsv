@@ -1,0 +1,9 @@
+gene	exposure_file	file_exists	n_rows	all_required_cols_present	missing_cols
+"CXCL10"	"05_MR/01_raw_data/exposure/eQTLGen/CXCL10_cis_eqtl.tsv"	TRUE	1142	TRUE	""
+"GBP4"	"05_MR/01_raw_data/exposure/eQTLGen/GBP4_cis_eqtl.tsv"	TRUE	1058	TRUE	""
+"GPX4"	"05_MR/01_raw_data/exposure/eQTLGen/GPX4_cis_eqtl.tsv"	TRUE	813	TRUE	""
+"IDO1"	"05_MR/01_raw_data/exposure/eQTLGen/IDO1_cis_eqtl.tsv"	TRUE	1299	TRUE	""
+"IL15RA"	"05_MR/01_raw_data/exposure/eQTLGen/IL15RA_cis_eqtl.tsv"	TRUE	376	TRUE	""
+"SLC31A1"	"05_MR/01_raw_data/exposure/eQTLGen/SLC31A1_cis_eqtl.tsv"	TRUE	750	TRUE	""
+"TGFBI"	"05_MR/01_raw_data/exposure/eQTLGen/TGFBI_cis_eqtl.tsv"	TRUE	1531	TRUE	""
+"TGFBR3"	"05_MR/01_raw_data/exposure/eQTLGen/TGFBR3_cis_eqtl.tsv"	TRUE	352	TRUE	""
